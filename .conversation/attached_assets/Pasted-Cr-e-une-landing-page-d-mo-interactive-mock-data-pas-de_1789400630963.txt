@@ -1,0 +1,29 @@
+Crée une landing page + démo interactive (mock data, pas de vrai backend) pour RideRank, une plateforme de classement communautaire de spots et sentiers VTT — le concept "TripRank" appliqué au VTT/mountain bike, en français.
+
+Concept produit
+RideRank permet aux riders de découvrir, classer et noter des spots VTT (bike parks, sentiers enduro, XC, descente, freeride) partagés par la communauté, un peu comme TripRank le fait pour les voyages/destinations, mais 100% orienté VTT.
+
+Fonctionnalité phare à mettre en avant : "Cap ou pas" — sur chaque spot ou passage technique, les riders votent si c'est "Cap" (faisable) ou "Pas cap" (réservé aux experts / trop engagé), avec un compteur de votes visible et un badge coloré. C'est l'élément différenciant du site, à traiter comme un vrai argument marketing sur la landing (section dédiée, pas juste un détail).
+
+Portée du build
+C'est une démo interactive front-end uniquement : pas de vraie base de données, pas de vraie authentification. Toutes les données (spots, classements, profils, votes) sont en mock data (JSON en dur dans le code), mais l'interface doit être entièrement cliquable et donner l'illusion d'une vraie appli (navigation fluide, interactions qui réagissent visuellement même si rien n'est persisté). Un formulaire d'inscription/waitlist en haut de la landing peut afficher un message de confirmation au submit sans réellement rien envoyer.
+
+Fonctionnalités à inclure
+Landing / Hero : accroche forte, visuel VTT impactant (photo d'action ou illustration dynamique), CTA principal "Rejoindre la communauté" / waitlist email, aperçu des 4 fonctionnalités clés.
+
+Classement des spots VTT : page/section listant les meilleurs spots (10-15 spots mockés avec noms réalistes de stations VTT françaises — Les Gets, Morzine-Avoriaz, Châtel, La Bresse, Les Orres, Châtel-en-Trièves, Ainsa, etc.), classés par note communautaire, avec filtres (région, type de pratique : Enduro / XC / DH / Freeride / All Mountain, niveau de difficulté). Chaque spot en carte avec photo, note, nombre d'avis, badges de difficulté.
+
+Carte interactive : carte (Leaflet ou Mapbox, à défaut une carte stylisée statique avec pins cliquables) affichant les spots géolocalisés, avec popup au clic (nom, note, difficulté, mini-tracé). Filtrable par les mêmes critères que le classement.
+
+Défis "Cap ou pas" : section ou page dédiée mettant en scène 5-8 défis (passage technique, saut, descente engagée) avec photo/description, barre de vote visuelle Cap/Pas cap et pourcentage, quelques commentaires mockés de riders.
+
+Profils riders & communauté : page profil type (avatar, pseudo, nombre de spots ridés, badges obtenus, classement parmi les riders), + mini classement des top riders de la communauté (leaderboard).
+
+Direction visuelle
+Style sport énergique : fond dominant noir/anthracite, accents orange vif et jaune, typographie bold/condensée façon marque de sport extrême, forts contrastes, animations/micro-interactions au survol (cartes qui se soulèvent, boutons qui pulsent), photos d'action VTT en grand format sur le hero et les sections clés. Mobile-first impératif : un rider consulte souvent ça depuis son téléphone au pied d'un sentier — tout doit être parfaitement utilisable et lisible sur petit écran.
+
+Stack technique suggérée
+React + Tailwind CSS pour le front, données mockées en JSON/constantes locales, pas de backend nécessaire pour cette V1. Structure en composants réutilisables (SpotCard, ChallengeCard, RiderBadge, MapView, RankingList) pour pouvoir brancher un vrai backend plus tard sans tout refaire.
+
+Ton et langue
+Tout le contenu en français, ton communautaire et engagé (tutoiement, vocabulaire VTT authentique : "session", "run", "spot", "sentier", "descente"), pas de jargon marketing générique.
