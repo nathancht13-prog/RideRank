@@ -1,0 +1,1 @@
+- [Supabase connector paths](supabase-connector-paths.md) — In this Repl, Supabase connector proxy paths are relative to PostgREST, despite setup text showing /rest/v1.
