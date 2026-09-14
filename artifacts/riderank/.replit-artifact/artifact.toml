@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "RideRank VTT"
+title = "Sentiz"
 description = "Une landing page interactive en français pour découvrir, classer et voter sur les meilleurs spots et sentiers VTT de la communauté."
 version = "1.0.0"
 id = "artifacts/riderank"

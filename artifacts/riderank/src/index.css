@@ -223,10 +223,15 @@ img.spot-visual { position: absolute; inset: 0; width: 100%; height: 100%; objec
 .vote-bar { height: 6px; margin-top: 6px; background: hsl(var(--muted)); }.vote-bar-fill { height: 100%; width: 72%; background: hsl(var(--primary)); transition: width .4s; }
 
 .community { background: hsl(var(--accent)); color: #0a0a0a; }
-.community .eyebrow { color: #0a0a0a; }.community .section-title { max-width: 640px; }
+.community .eyebrow,
+.community .section-intro,
+.community .leader-rank,
+.community .leader-info,
+.community .leader-points { color: #0a0a0a; }
+.community .section-title { max-width: 640px; }
 .community-grid { display: grid; gap: 28px; align-items: start; }
 .leaderboard { padding: 8px 0; border-top: 1px solid rgba(0,0,0,.2); }
-.leader-row { display: flex; align-items: center; gap: 13px; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,.15); transition: padding .2s; overflow: hidden; }
+.leader-row { display: flex; align-items: center; gap: 13px; padding: 16px 0; border: 0; border-bottom: 1px solid rgba(0,0,0,.15); background: transparent; color: #0a0a0a; transition: padding .2s; overflow: hidden; }
 .leader-row:hover { padding-left: 6px; }
 .leader-rank { width: 25px; font-family: var(--app-font-display); font-size: 22px; font-weight: 700; flex-shrink: 0; }
 .leader-row svg { flex-shrink: 0; }
@@ -234,7 +239,7 @@ img.spot-visual { position: absolute; inset: 0; width: 100%; height: 100%; objec
 .leader-info { flex: 1; min-width: 0; overflow: hidden; }
 .leader-info strong { display: block; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .leader-info span { font-size: 11px; opacity: .7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
-.leader-points { font-family: var(--app-font-display); font-size: 21px; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+.leader-points { color: #0a0a0a; font-family: var(--app-font-display); font-size: 21px; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
 .leader-tabs { display: flex; gap: 16px; margin-bottom: 10px; }.leader-tab { border: 0; border-bottom: 2px solid transparent; padding: 0 0 7px; background: none; color: rgba(0,0,0,.5); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }.leader-tab.active { border-color: #0a0a0a; color: #0a0a0a; }
 .profile-card { display: grid; grid-template-columns: 1fr; min-height: 285px; padding: 25px; background: #1a1a1a; color: #fff; position: relative; overflow: hidden; }
 .profile-card::after { content: ""; position: absolute; width: 220px; height: 220px; right: -40px; top: -60px; border: 35px solid hsl(var(--primary)); border-radius: 50%; opacity: .75; pointer-events: none; }
