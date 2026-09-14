@@ -1,0 +1,45 @@
+On passe le site Sentiz d'une démo en mock data à une vraie appli avec comptes utilisateurs et données persistées, via Supabase.
+
+1. Connexion Supabase
+Utilise l'intégration native Supabase de Replit pour créer et connecter un nouveau projet Supabase à ce Repl (pas de projet existant, il faut le créer). Configure les clés (URL + anon key) en variables d'environnement/secrets Replit, jamais en dur dans le code. La clé service role (si utilisée pour des opérations serveur) ne doit jamais être exposée côté client.
+
+2. Authentification
+Mets en place l'authentification Supabase avec email + mot de passe uniquement (pas de social login pour l'instant) :
+
+Formulaire d'inscription (email, mot de passe, pseudo)
+Formulaire de connexion
+Déconnexion
+Persistance de session (l'utilisateur reste connecté au rechargement de la page)
+Gestion des erreurs affichée proprement à l'utilisateur (email déjà utilisé, mot de passe trop court, identifiants invalides, etc.)
+Intègre ces formulaires dans une modale de connexion/inscription (pas une page séparée), accessible depuis le bouton "REJOINDRE" du header.
+
+3. Schéma de base de données
+Crée les tables suivantes dans Supabase (avec Row Level Security activé sur toutes) :
+
+profiles : liée à auth.users (id = user id), colonnes : pseudo, avatar_url, ville, bio, date de création. Un profil est créé automatiquement à l'inscription (trigger ou logique applicative).
+spots : les spots VTT existants (nom, région, type de pratique, description, note moyenne calculée, photo). Migre les données mockées actuelles (Les Gets, Morzine, Loudenvielle, Châtel...) comme données de seed dans cette table.
+spot_reviews : avis/notes sur un spot, liée à un user_id et un spot_id, avec note (1-5) et commentaire texte. Un utilisateur ne peut laisser qu'un avis par spot (contrainte unique user_id + spot_id, avec possibilité de modifier son propre avis).
+challenges : les défis "Cap ou pas" (titre, description, spot associé, photo, date de clôture).
+challenge_votes : votes sur les défis, liée à user_id et challenge_id, valeur booléenne (cap / pas cap). Un utilisateur ne peut voter qu'une fois par défi (contrainte unique user_id + challenge_id).
+4. Politiques de sécurité (Row Level Security)
+Pour chaque table :
+
+Lecture : publiquement accessible à tous (visiteurs non connectés inclus) pour spots, challenges, profiles, spot_reviews, challenge_votes (pour afficher les compteurs/moyennes) — sauf indication contraire.
+Écriture (insert/update/delete) : uniquement pour l'utilisateur connecté, et uniquement sur ses propres lignes (auth.uid() = user_id). Un utilisateur ne peut jamais modifier ou supprimer les données d'un autre utilisateur.
+5. Ce qui nécessite d'être connecté (à gérer côté UI)
+Ces actions doivent être réservées aux utilisateurs connectés. Si un visiteur non connecté clique dessus, ouvre directement la modale de connexion/inscription au lieu d'exécuter l'action :
+
+Voter Cap/Pas cap sur un défi
+Créer ou éditer son profil rider
+Noter ou commenter un spot
+Tout le reste (parcourir les spots, la carte, le classement, les défis en lecture) reste accessible sans compte, en lecture seule.
+
+6. Adapter la landing page à l'état de connexion
+Header : quand personne n'est connecté, garde le bouton "REJOINDRE" actuel. Une fois connecté, remplace ce bouton par l'avatar/pseudo de l'utilisateur avec un petit menu déroulant ("Mon profil", "Se déconnecter").
+Bouton "CRÉER MON PROFIL" (section classement) : si non connecté, ouvre la modale d'inscription. Si déjà connecté, redirige vers la page/section d'édition du profil.
+Vote Cap/Pas cap : si connecté, le vote est enregistré dans Supabase en temps réel et le compteur/pourcentage affiché se met à jour avec les vraies données (plus de chiffres statiques mockés). Si l'utilisateur a déjà voté sur ce défi, affiche son vote et désactive le re-vote.
+Classement des riders : doit maintenant afficher les vrais profils inscrits (triés par un score à définir simplement, ex. nombre d'avis + votes + spots ajoutés), plus les 4 riders mockés actuels peuvent rester en données de démo si la table est vide au départ.
+7. Sécurité générale
+Toutes les entrées utilisateur (pseudo, bio, commentaires) doivent être validées côté client ET protégées côté Supabase par les policies RLS — ne fais confiance à aucune donnée envoyée par le client sans vérification serveur.
+Les mots de passe ne transitent jamais en clair dans les logs ou le code.
+Ajoute une validation basique : email au bon format, mot de passe minimum 8 caractères.
