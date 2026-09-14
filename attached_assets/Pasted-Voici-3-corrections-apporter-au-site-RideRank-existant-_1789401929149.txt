@@ -1,0 +1,23 @@
+Voici 3 corrections à apporter au site RideRank existant, plus un changement de palette et une préparation pour l'ajout de vraies photos.
+
+1. Corriger 3 bugs
+Bouton de vote "Cap ou pas" : le bouton affiche actuellement "CAPUCHON" au lieu de "CAP". Corrige le texte en "CAP" (le bouton doit être un simple duo "CAP" / "PAS CAP").
+Chevauchement de texte dans le classement des riders : sur la section leaderboard, un badge/tag ("Caroline du Nord" ou une info de localisation) se superpose visuellement au nom "Nina Caron" sur la ligne #3. Corrige le positionnement CSS pour que chaque ligne du classement affiche proprement : rang, avatar, nom, pseudo, score, sans aucun chevauchement de texte.
+Incohérence de nom/logo : le header affiche "Classement des courses" comme nom du site alors que le projet s'appelle RideRank. Remplace ce texte partout où il apparaît (header, footer, titre de page, meta title) par "RideRank".
+2. Changer la palette de couleurs
+Remplace la palette actuelle (bleu marine / turquoise) par la palette originale demandée :
+
+Fond dominant : noir / anthracite très foncé (#0A0A0A à #1A1A1A selon les sections)
+Accent principal : orange vif (type #FF5A1F ou équivalent) — pour les CTA, badges, éléments clés
+Accent secondaire : jaune (type #FFC700 ou équivalent) — pour les highlights, notes, éléments qui doivent attirer l'œil sans être aussi présents que l'orange
+Texte : blanc/gris clair sur fond sombre, contraste élevé partout (accessibilité)
+Applique cette palette à l'ensemble du site (hero, cartes de spots, section carte, défis "Cap ou pas", classement riders) en remplaçant systématiquement le bleu/turquoise actuel. Garde la même structure et les mêmes composants, c'est uniquement un remplacement de thème couleur.
+
+3. Préparer les emplacements pour de vraies photos VTT
+Je vais fournir mes propres photos VTT à intégrer. Prépare le site pour les recevoir facilement, avec des emplacements clairement identifiés (des zones d'image avec un nom de variable/fichier explicite ou un commentaire dans le code) aux endroits suivants :
+
+Hero de la landing : grande photo d'action VTT en fond ou en visuel principal à droite du titre
+Chaque carte de spot (Les Gets, Morzine, Loudenvielle, etc.) : une photo du spot en image de couverture de carte, à la place du dégradé stylisé actuel
+Section "Défis Cap ou pas" : une photo du passage technique/saut concerné pour chaque défi, à la place du visuel graphique actuel
+Profils riders : une photo/avatar réel pour chaque rider en tête de classement
+Remplace les dégradés/illustrations actuels par des balises <img> avec des noms de fichiers clairs (ex: hero-photo.jpg, spot-les-gets.jpg, defi-jump-line.jpg, rider-lea-morel.jpg) et pour l'instant utilise des placeholders visuellement neutres (gris foncé avec icône photo) à ces emplacements précis, en attendant que j'uploade les vraies images. Structure le code pour que je puisse remplacer chaque image facilement sans toucher au reste du layout.

@@ -21,6 +21,14 @@ import {
   Zap,
 } from 'lucide-react';
 
+const PHOTOS = {
+  hero: '/images/tim-foster-qrIy8dBzCVU-unsplash_1789402010865.jpg',
+  challenge: '/images/tim-foster-k_76BsRGSWM-unsplash_1789402010866.jpg',
+  spotBikePark: '/images/jake-schumacher-r92CDGlpMQE-unsplash_1789402010866.jpg',
+  spotEnduro: '/images/axel-brunst-yr22qT5pqw4-unsplash_1789402010866.jpg',
+  avatarPlaceholder: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231a1a1a'/%3E%3Cpath d='M35 40 A15 15 0 1 1 65 40 A15 15 0 1 1 35 40 M20 85 Q50 55 80 85' stroke='%23333' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E",
+};
+
 type Spot = {
   id: string;
   name: string;
@@ -33,19 +41,19 @@ type Spot = {
 };
 
 const spots: Spot[] = [
-  { id: 'les-gets', name: 'Les Gets', location: 'Haute-Savoie · 74', type: 'Bike park', rating: '4.9', riders: '2 184', elevation: '1 172 m', visual: 'visual-one' },
-  { id: 'loudenvielle', name: 'Loudenvielle', location: 'Hautes-Pyrénées · 65', type: 'Enduro', rating: '4.8', riders: '1 427', elevation: '1 440 m', visual: 'visual-two' },
-  { id: 'morzine', name: 'Morzine', location: 'Haute-Savoie · 74', type: 'Bike park', rating: '4.7', riders: '3 086', elevation: '1 000 m', visual: 'visual-three' },
-  { id: 'chatel', name: 'Châtel', location: 'Haute-Savoie · 74', type: 'Bike park', rating: '4.7', riders: '1 914', elevation: '1 680 m', visual: 'visual-two' },
-  { id: 'millet', name: 'Le Semnoz', location: 'Haute-Savoie · 74', type: 'DH', rating: '4.6', riders: '936', elevation: '1 490 m', visual: 'visual-three' },
-  { id: 'blausasc', name: 'Blausasc', location: 'Alpes-Maritimes · 06', type: 'Enduro', rating: '4.6', riders: '812', elevation: '650 m', visual: 'visual-one' },
+  { id: 'les-gets', name: 'Les Gets', location: 'Haute-Savoie · 74', type: 'Bike park', rating: '4.9', riders: '2 184', elevation: '1 172 m', visual: PHOTOS.spotBikePark },
+  { id: 'loudenvielle', name: 'Loudenvielle', location: 'Hautes-Pyrénées · 65', type: 'Enduro', rating: '4.8', riders: '1 427', elevation: '1 440 m', visual: PHOTOS.spotEnduro },
+  { id: 'morzine', name: 'Morzine', location: 'Haute-Savoie · 74', type: 'Bike park', rating: '4.7', riders: '3 086', elevation: '1 000 m', visual: PHOTOS.spotBikePark },
+  { id: 'chatel', name: 'Châtel', location: 'Haute-Savoie · 74', type: 'Bike park', rating: '4.7', riders: '1 914', elevation: '1 680 m', visual: PHOTOS.spotBikePark },
+  { id: 'millet', name: 'Le Semnoz', location: 'Haute-Savoie · 74', type: 'DH', rating: '4.6', riders: '936', elevation: '1 490 m', visual: PHOTOS.spotEnduro },
+  { id: 'blausasc', name: 'Blausasc', location: 'Alpes-Maritimes · 06', type: 'Enduro', rating: '4.6', riders: '812', elevation: '650 m', visual: PHOTOS.spotEnduro },
 ];
 
 const riders = [
-  { name: 'Léa Morel', handle: '@lea_en_l’air', initials: 'LM', city: 'Annecy', points: '1 284', rides: '47 sorties' },
-  { name: 'Baptiste Rey', handle: '@bapt_trails', initials: 'BR', city: 'Grenoble', points: '1 116', rides: '39 sorties' },
-  { name: 'Nina Caron', handle: '@nina_crashless', initials: 'NC', city: 'Lyon', points: '982', rides: '34 sorties' },
-  { name: 'Théo Garnier', handle: '@theo_dh', initials: 'TG', city: 'Chambéry', points: '914', rides: '31 sorties' },
+  { name: 'Léa Morel', handle: '@lea_en_l’air', avatar: PHOTOS.avatarPlaceholder, city: 'Annecy', points: '1 284', rides: '47 sorties' },
+  { name: 'Baptiste Rey', handle: '@bapt_trails', avatar: PHOTOS.avatarPlaceholder, city: 'Grenoble', points: '1 116', rides: '39 sorties' },
+  { name: 'Nina Caron', handle: '@nina_crashless', avatar: PHOTOS.avatarPlaceholder, city: 'Lyon', points: '982', rides: '34 sorties' },
+  { name: 'Théo Garnier', handle: '@theo_dh', avatar: PHOTOS.avatarPlaceholder, city: 'Chambéry', points: '914', rides: '31 sorties' },
 ];
 
 const mapSpots = [
@@ -138,12 +146,10 @@ function App() {
               </div>
               <div className="hero-note"><span className="kicker-line" /><strong>1 842 riders</strong> roulent déjà avec nous</div>
             </div>
-            <div className="hero-art" aria-label="Illustration d'un rider sur un saut">
+            <div className="hero-art" aria-label="Photo d'un rider sur un saut">
               <div className="poster">
+                <img src={PHOTOS.hero} alt="Rider en action" />
                 <div className="poster-label">RIDE<br />HARD<br /><span>STAY<br />HUMBLE</span></div>
-                <div className="poster-slope" />
-                <div className="poster-rider" />
-                <div className="poster-wheels" />
                 <div className="poster-meta">FR / 45.923° N · 6.869° E / RUN 042</div>
               </div>
             </div>
@@ -191,7 +197,7 @@ function App() {
                   aria-pressed={selectedSpot === spot.id}
                   data-testid={`card-spot-${spot.id}`}
                 >
-                  <div className={`spot-visual ${spot.visual}`} />
+                  <img src={spot.visual} alt={spot.name} className="spot-visual" />
                   <div className="spot-rating" data-testid={`text-rating-${spot.id}`}>{spot.rating}<small>/ 5</small></div>
                   <div className="spot-content">
                     <div className="spot-tag">#{String(index + 1).padStart(2, '0')} · {spot.type}</div>
@@ -264,12 +270,15 @@ function App() {
               <div className="hero-note"><Zap size={15} color="hsl(var(--primary))" /><strong>2 406 votes</strong> cette semaine</div>
             </div>
             <div className="vote-card" data-testid="card-daily-challenge">
-              <div className="vote-rider"><div className="bike-icon" /></div>
+              <div className="vote-rider">
+                <img src={PHOTOS.challenge} alt="Défi VTT" />
+                <div className="bike-icon" />
+              </div>
               <div className="vote-question">La double noire de Châtel<br />sans poser le pied ?</div>
               <div className="vote-meta"><span><Flame size={13} /> Défi du jour</span><span>Ferme dans 04:18:32</span></div>
               <div className="vote-buttons">
-                <button className={`vote-button cap ${vote === 'cap' ? 'selected' : ''}`} onClick={() => chooseVote('cap')} data-testid="button-vote-cap"><Check size={17} /> Cap</button>
-                <button className={`vote-button pas ${vote === 'pas' ? 'selected' : ''}`} onClick={() => chooseVote('pas')} data-testid="button-vote-pas"><X size={17} /> Pas cap</button>
+                <button className={`vote-button cap ${vote === 'cap' ? 'selected' : ''}`} onClick={() => chooseVote('cap')} data-testid="button-vote-cap">CAP</button>
+                <button className={`vote-button pas ${vote === 'pas' ? 'selected' : ''}`} onClick={() => chooseVote('pas')} data-testid="button-vote-pas">PAS CAP</button>
               </div>
               {vote && <p className="vote-thanks" data-testid="status-vote-confirmation">Vote enregistré. On se retrouve en bas.</p>}
               <div className="bar-label"><span>La meute a parlé</span><span data-testid="text-vote-ratio">{capCount}% Cap</span></div>
@@ -285,7 +294,7 @@ function App() {
                 <div className="eyebrow">Le classement de la semaine</div>
                 <h2 className="section-title" id="community-title">Les riders<br />font le spot.</h2>
                 <p className="section-intro">Chaque trace validée, chaque avis utile et chaque vote font grimper ton nom. Pas besoin d’être pro pour marquer des points.</p>
-                <a className="button-ghost" style={{ borderColor: 'rgba(38,29,27,.4)', color: '#261d1b', display: 'inline-flex', marginTop: 24 }} href="#attente" data-testid="button-community-profile">Créer mon profil <ArrowRight size={15} /></a>
+                <a className="button-ghost" style={{ borderColor: 'rgba(0,0,0,.4)', color: '#0a0a0a', display: 'inline-flex', marginTop: 24 }} href="#attente" data-testid="button-community-profile">Créer mon profil <ArrowRight size={15} /></a>
               </div>
               <div>
                 <div className="leader-tabs" role="tablist">
@@ -296,7 +305,7 @@ function App() {
                   {riders.map((rider, index) => (
                     <button className="leader-row" key={rider.handle} onClick={() => setSelectedSpot(index === 0 ? 'les-gets' : 'morzine')} data-testid={`button-rider-${index + 1}`}>
                       <span className="leader-rank">{String(index + 1).padStart(2, '0')}</span>
-                      <span className="avatar">{rider.initials}</span>
+                      <img src={rider.avatar} alt={rider.name} className="avatar" />
                       <span className="leader-info"><strong>{leaderTab === 'près de moi' ? rider.city : rider.name}</strong><span>{rider.handle} · {rider.rides}</span></span>
                       <span className="leader-points">{rider.points}</span>
                       <ArrowRight size={14} />
@@ -304,7 +313,7 @@ function App() {
                   ))}
                 </div>
                 <div className="profile-card" data-testid="card-featured-rider">
-                  <div className="profile-top"><div className="profile-avatar">LM</div><div><h3>Léa<br />Morel</h3><p>Rider vérifiée · Annecy</p></div><Heart size={17} style={{ marginLeft: 'auto' }} /></div>
+                  <div className="profile-top"><img src={PHOTOS.avatarPlaceholder} alt="Léa Morel" className="profile-avatar" /><div><h3>Léa<br />Morel</h3><p>Rider vérifiée · Annecy</p></div><Heart size={17} style={{ marginLeft: 'auto' }} /></div>
                   <p className="profile-bio">« Une bonne sortie, c’est quand tu ne sais plus si tu as plus ri ou plus mangé de terre. »</p>
                   <div className="profile-stats"><div className="profile-stat"><strong>1 284</strong><span>points</span></div><div className="profile-stat"><strong>47</strong><span>sorties</span></div><div className="profile-stat"><strong>12</strong><span>spots</span></div></div>
                 </div>
@@ -330,7 +339,7 @@ function App() {
                   <button type="submit" aria-label="Rejoindre la liste d'attente" data-testid="button-waitlist-submit"><ArrowRight size={19} /></button>
                 </form>
               )}
-              <p style={{ color: 'rgba(241,238,226,.4)', fontSize: 11, marginTop: 13 }}>Pas de spam. Juste les infos utiles avant ta prochaine sortie.</p>
+              <p style={{ color: 'rgba(255,255,255,.4)', fontSize: 11, marginTop: 13 }}>Pas de spam. Juste les infos utiles avant ta prochaine sortie.</p>
             </div>
           </div>
         </section>
