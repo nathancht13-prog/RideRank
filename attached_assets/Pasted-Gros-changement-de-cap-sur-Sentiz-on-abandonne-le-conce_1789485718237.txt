@@ -1,0 +1,64 @@
+Gros changement de cap sur Sentiz : on abandonne le concept "Cap ou pas cap" et on restructure toute la landing page autour du classement, façon mymotorank.com (mais en VTT, avec un habillage et des textes différents pour ne pas être une copie).
+
+1. Supprimer complètement "Cap ou pas cap"
+Ce n'est plus l'objectif de l'appli. Retire entièrement :
+
+L'onglet "LES DÉFIS" du header/nav
+Toute la section "Alors, cap ou pas cap ?" de la landing page
+La carte glassmorphism "72% CAP" dans le hero (remplace-la par une carte stat différente, ex : dénivelé cumulé ou nombre de spots explorés)
+Le code, les routes et la logique liés aux défis
+Les tables Supabase challenges et challenge_votes (et leurs policies RLS associées), plus toute requête qui les utilise
+2. Nouvelle structure de la landing page
+Voici l'ordre des sections à mettre en place. Le ton, les intitulés et les textes doivent être inspirés de mymotorank.com mais reformulés à notre sauce (vocabulaire VTT, accroches différentes) — pas une copie mot pour mot de leurs textes.
+
+a) Hero (déjà en place, à ajuster)
+Remplace les boutons actuels "EXPLORER LES SPOTS" / "VOTER POUR UN RUN" par un seul CTA principal : "ENTRER DANS LE CLASSEMENT"
+Garde une petite carte teaser dans le hero type "#1 CE MOIS-CI · [mois] — [Pseudo du top rider] — XX KM" (donnée réelle si dispo, sinon donnée de démo)
+Sous le bouton, une micro-phrase du type "Connexion ou création de compte rapide" (on reste en email/mot de passe, pas de mention Google)
+b) "Pas d'idée d'où rider ?"
+Nouvelle section, sous le hero :
+
+Accroche du type "PAS D'IDÉE ?" / "SENTIZ TE TROUVE TON SPOT." (reformule à ta sauce, évite la formulation exacte de mymotorank)
+Texte d'explication : l'utilisateur indique son niveau, le temps qu'il a, et/ou sa région, et Sentiz lui propose un spot ou sentier adapté (une boucle technique proche, ou une découverte dans une nouvelle vallée)
+CTA : "TROUVER MON SPOT"
+Fonctionnellement : un petit formulaire (niveau, temps disponible ou région) qui filtre/sélectionne un spot pertinent parmi ceux déjà en base (spots) et l'affiche en résultat. Pas besoin d'un algorithme complexe pour l'instant, un filtrage simple suffit.
+c) Spots et carte (déjà existants)
+Garde les sections "Les spots qui parlent" (cartes de classement des spots) et "La carte" (carte interactive) telles qu'elles existent déjà, positionnées juste après la section "Trouver mon spot" — c'est la suite logique du parcours.
+
+d) Classement (mi-page)
+Nouvelle section dédiée, façon mymotorank :
+
+Accroche : "CLASSEMENT" / "CHAQUE TRACE COMPTE." (ou équivalent reformulé)
+Texte : les sorties/kilomètres réels font grimper au classement, comparaison possible par région ou entre amis
+Affiche un teaser de classement : le top rider du mois en cours, ET si l'utilisateur est connecté, sa propre position avec un message du type "Plus que X km pour passer devant [pseudo au-dessus]" (donnée réelle issue de Supabase)
+Si l'utilisateur n'est pas connecté, affiche plutôt une invitation claire à créer un compte pour apparaître dans le classement
+CTA vers le classement complet
+e) "Une sortie peut tout changer"
+Accroche reformulée (pas "ta prochaine sortie peut tout changer" mot pour mot — trouve une variante, ex : "UNE SORTIE PEUT TOUT CHANGER" ou "QUELQUES KILOMÈTRES, UN NOUVEAU RANG")
+Texte : quelques kilomètres/sorties peuvent suffire à gagner des places ou débloquer un badge
+Un encart "Exemple de progression" avec une illustration simple de saut de rang (ex : #12 → #8, +4 places) et un objectif suivant ("Plus que X km pour atteindre le #7")
+CTA : "EN SELLE" (ou une autre formule VTT, évite "à toi de rouler")
+f) FAQ
+Section "Questions fréquentes" avec des questions adaptées au VTT (reformule, ne copie pas mymotorank mot pour mot) :
+
+Sentiz est-il gratuit ?
+Comment fonctionne la suggestion de spots ?
+Mes statistiques (vitesse, dénivelé) sont-elles publiques ?
+Comment sont validés les kilomètres/sorties ?
+Sentiz fonctionne-t-il avec tout type de VTT (enduro, XC, DH, e-VTT) ?
+Dois-je garder l'application ouverte pendant ma sortie ?
+Ajoute une petite phrase de responsabilité, du type : "Sentiz encourage une pratique du VTT respectueuse des sentiers et des autres usagers."
+
+g) À propos + footer
+Un court paragraphe "Sentiz en quelques mots" décrivant l'appli
+Footer avec :
+Logo + tagline courte et originale (pas "Ne cherche plus par où rouler")
+NAVIGATION : liens d'ancrage qui ramènent vers les sections correspondantes de la landing page (Spots, Classement, FAQ) — pas de nouvelles pages, juste un scroll vers la bonne section
+LÉGAL : Mentions légales, Confidentialité, Conditions, Contact
+SUIVEZ-NOUS : Instagram (placeholder)
+Ligne de copyright
+3. Page/section "Mentions légales"
+Crée une page ou section "Mentions légales" basique avec la structure standard française (Éditeur du site, Hébergement, Propriété intellectuelle, Données personnelles, Contact) en contenu placeholder — j'éditerai les infos réelles (nom, SIRET, hébergeur) moi-même plus tard.
+
+4. Rappel mobile-first
+Toute cette refonte doit rester pensée mobile en priorité (comme demandé précédemment) : sections qui s'empilent proprement, CTA et formulaires confortables au doigt, pas de débordement horizontal.
