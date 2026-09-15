@@ -30,7 +30,7 @@ function friendlyAuthError(message: string) {
   const value = message.toLowerCase();
   if (value.includes('already registered') || value.includes('already been registered')) return 'Cet e-mail est déjà utilisé.';
   if (value.includes('invalid login credentials')) return 'E-mail ou mot de passe incorrect.';
-  if (value.includes('password')) return 'Le mot de passe doit contenir au moins 8 caractères.';
+  if (value.includes('password')) return 'Le mot de passe doit contenir entre 6 et 8 caractères.';
   if (value.includes('email')) return 'Vérifie le format de ton adresse e-mail.';
   return 'Une erreur est survenue. Réessaie dans un instant.';
 }
@@ -120,9 +120,10 @@ export default function SentizApp() {
     const form = new FormData(event.currentTarget);
     const email = String(form.get('email') ?? '').trim();
     const password = String(form.get('password') ?? '');
-    const pseudo = String(form.get('pseudo') ?? '').trim();
+    const pseudoRaw = String(form.get('pseudo') ?? '').trim();
+    const pseudo = pseudoRaw.replace(/^@/, '').slice(0, 30);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setAuthError('Saisis une adresse e-mail valide.');
-    if (password.length < 8) return setAuthError('Le mot de passe doit contenir au moins 8 caractères.');
+    if (password.length < 6 || password.length > 8) return setAuthError('Le mot de passe doit contenir entre 6 et 8 caractères.');
     if (authMode === 'signup' && (pseudo.length < 2 || pseudo.length > 30)) return setAuthError('Le pseudo doit contenir entre 2 et 30 caractères.');
     setAuthBusy(true); setAuthError('');
     const result = authMode === 'signup'
@@ -149,9 +150,11 @@ export default function SentizApp() {
     event.preventDefault();
     if (!session) return;
     const form = new FormData(event.currentTarget);
+    const pseudoRaw = String(form.get('pseudo') ?? '').trim();
+    const pseudo = pseudoRaw.replace(/^@/, '').slice(0, 30);
     const values = {
       id: session.user.id,
-      pseudo: String(form.get('pseudo') ?? '').trim().slice(0, 30),
+      pseudo,
       ville: String(form.get('ville') ?? '').trim().slice(0, 80) || null,
       bio: String(form.get('bio') ?? '').trim().slice(0, 500) || null,
     };
@@ -197,13 +200,47 @@ export default function SentizApp() {
             <button className="menu-button" aria-label="Menu" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
           </div>
         </div>
+        {menuOpen && <nav className="mobile-menu open" aria-label="Navigation mobile"><a href="#spots" onClick={() => setMenuOpen(false)}>Les spots</a><a href="#defis" onClick={() => setMenuOpen(false)}>Les défis</a><a href="#communaute" onClick={() => setMenuOpen(false)}>La communauté</a></nav>}
       </header>
 
       <main>
-        <section className="hero">
-          <div className="container hero-grid">
+        <section className="hero" style={{ backgroundImage: `url(${heroPhoto})` }}>
+          <div className="hero-overlay" />
+          <div className="container hero-grid relative z-10">
             <div className="hero-copy"><div className="hero-kicker"><span className="kicker-line" /> La communauté VTT qui ne reste pas en bas</div><h1>Trouve.<span>Roule.</span>Note.</h1><p className="hero-lede">Sentiz, c’est la carte vivante des traces qui méritent vraiment une remontée.</p><div className="hero-buttons"><a className="button-primary" href="#spots">Explorer les spots <ArrowRight size={15} /></a><a className="button-ghost" href="#defis">Voter pour un run</a></div></div>
-            <div className="hero-art"><div className="poster"><img src={heroPhoto} alt="Rider en action" /><div className="poster-label">RIDE<br />HARD<br /><span>STAY<br />HUMBLE</span></div></div></div>
+            <div className="hero-art">
+              <div className="phone-mockup">
+                <div className="phone-notch" />
+                <div className="phone-screen" style={{ backgroundImage: `url(${challengePhoto})` }}>
+                  <div className="phone-ui">
+                    <div className="phone-header"><span className="brand-mark">S</span><div className="phone-avatar" /></div>
+                    <div className="phone-card">
+                      <h4>Cap<br/><span>ou pas Cap</span></h4>
+                      <div className="phone-buttons">
+                        <div className="phone-btn pas">PAS CAP</div>
+                        <div className="phone-btn cap">CAP</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="float-card fc-1">
+                <div className="fc-icon"><Mountain size={20} /></div>
+                <div className="fc-text"><strong>42 KM · 1 280 M D+</strong><span>Sortie du jour</span></div>
+              </div>
+              <div className="float-card fc-2">
+                <div className="fc-icon yellow"><Trophy size={20} /></div>
+                <div className="fc-text"><strong>LÉA MOREL</strong><span>Rider · Elite</span></div>
+              </div>
+              <div className="float-card fc-3">
+                <div className="fc-icon"><Zap size={20} /></div>
+                <div className="fc-text"><strong>{capRatio || 72}% CAP</strong><span>Défi du jour</span></div>
+              </div>
+              <div className="float-card fc-4">
+                <div className="fc-icon yellow"><ArrowRight size={20} /></div>
+                <div className="fc-text"><strong>#12 → #8</strong><span>Classement · +4 places</span></div>
+              </div>
+            </div>
           </div>
         </section>
         <div className="ticker"><div className="ticker-track"><span>Données live <b>·</b> Supabase</span><span>Défi du jour <b>·</b> {capRatio}% Cap</span><span>{spots.length} spots ouverts</span><span>{votes.length} votes enregistrés</span><span>Données live <b>·</b> Supabase</span><span>Défi du jour <b>·</b> {capRatio}% Cap</span><span>{spots.length} spots ouverts</span><span>{votes.length} votes enregistrés</span></div></div>
@@ -231,8 +268,8 @@ export default function SentizApp() {
       <footer className="footer"><div className="container footer-inner"><Brand /><p>Fait pour celles et ceux qui prennent la ligne d’à côté.</p><button className="share-button" onClick={() => navigator.clipboard?.writeText(location.href)}><Share2 size={14} /> Partager</button></div></footer>
 
       {notice && <button className="toast-notice" onClick={() => setNotice('')}><Check size={15} /> {notice}</button>}
-      {authOpen && <div className="modal-backdrop" onMouseDown={() => setAuthOpen(false)}><section className="app-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title" onMouseDown={(event) => event.stopPropagation()}><button className="modal-close" aria-label="Fermer" onClick={() => setAuthOpen(false)}><X /></button><div className="eyebrow">Entre dans la meute</div><h2 id="auth-title">{authMode === 'login' ? 'Connexion' : 'Créer un compte'}</h2><div className="auth-tabs"><button className={authMode === 'login' ? 'active' : ''} onClick={() => { setAuthMode('login'); setAuthError(''); }}>Connexion</button><button className={authMode === 'signup' ? 'active' : ''} onClick={() => { setAuthMode('signup'); setAuthError(''); }}>Inscription</button></div><form className="modal-form" onSubmit={submitAuth}>{authMode === 'signup' && <label>Pseudo<input name="pseudo" minLength={2} maxLength={30} required autoComplete="nickname" /></label>}<label>E-mail<input name="email" type="email" required autoComplete="email" /></label><label>Mot de passe<input name="password" type="password" minLength={8} required autoComplete={authMode === 'login' ? 'current-password' : 'new-password'} /></label>{authError && <p className="form-error">{authError}</p>}<button className="button-primary" disabled={authBusy}>{authBusy ? 'Patiente…' : authMode === 'login' ? 'Se connecter' : 'Créer mon profil'}</button></form></section></div>}
-      {profileOpen && <div className="modal-backdrop" onMouseDown={() => setProfileOpen(false)}><section className="app-modal" role="dialog" aria-modal="true" onMouseDown={(e) => e.stopPropagation()}><button className="modal-close" onClick={() => setProfileOpen(false)}><X /></button><div className="eyebrow">Mon profil rider</div><h2>Ta trace</h2><form className="modal-form" onSubmit={submitProfile}><label>Pseudo<input name="pseudo" defaultValue={profile?.pseudo} minLength={2} maxLength={30} required /></label><label>Ville<input name="ville" defaultValue={profile?.ville || ''} maxLength={80} /></label><label>Bio<textarea name="bio" defaultValue={profile?.bio || ''} maxLength={500} rows={4} /></label><button className="button-primary">Enregistrer</button></form></section></div>}
+      {authOpen && <div className="modal-backdrop" onMouseDown={() => setAuthOpen(false)}><section className="app-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title" onMouseDown={(event) => event.stopPropagation()}><button className="modal-close" aria-label="Fermer" onClick={() => setAuthOpen(false)}><X size={20} /></button><div className="eyebrow">Entre dans la meute</div><h2 id="auth-title">{authMode === 'login' ? 'Connexion' : 'Créer un compte'}</h2><div className="auth-tabs"><button className={authMode === 'login' ? 'active' : ''} onClick={() => { setAuthMode('login'); setAuthError(''); }}>Connexion</button><button className={authMode === 'signup' ? 'active' : ''} onClick={() => { setAuthMode('signup'); setAuthError(''); }}>Inscription</button></div><form className="modal-form" onSubmit={submitAuth}>{authMode === 'signup' && <label>Pseudo<div className="input-with-prefix"><span className="input-prefix">@</span><input name="pseudo" minLength={2} maxLength={30} required autoComplete="nickname" placeholder="rider" /></div></label>}<label>E-mail<input name="email" type="email" required autoComplete="email" placeholder="toi@exemple.com" /></label><label>Mot de passe<input name="password" type="password" minLength={6} maxLength={8} required autoComplete={authMode === 'login' ? 'current-password' : 'new-password'} placeholder="••••••••" /><small className="field-help">6 à 8 caractères maximum.</small></label>{authError && <p className="form-error">{authError}</p>}<button className="button-primary" disabled={authBusy}>{authBusy ? 'Patiente…' : authMode === 'login' ? 'Se connecter' : 'Créer mon profil'}</button></form></section></div>}
+      {profileOpen && <div className="modal-backdrop" onMouseDown={() => setProfileOpen(false)}><section className="app-modal" role="dialog" aria-modal="true" onMouseDown={(e) => e.stopPropagation()}><button className="modal-close" onClick={() => setProfileOpen(false)}><X size={20} /></button><div className="eyebrow">Mon profil rider</div><h2>Ta trace</h2><form className="modal-form" onSubmit={submitProfile}><label>Pseudo<div className="input-with-prefix"><span className="input-prefix">@</span><input name="pseudo" defaultValue={profile?.pseudo} minLength={2} maxLength={30} required /></div></label><label>Ville<input name="ville" defaultValue={profile?.ville || ''} maxLength={80} placeholder="Ta ville" /></label><label>Bio<textarea name="bio" defaultValue={profile?.bio || ''} maxLength={500} rows={4} placeholder="Parle de tes runs, de ton bike..." /></label><button className="button-primary">Enregistrer</button></form></section></div>}
       {reviewOpen && <div className="modal-backdrop" onMouseDown={() => setReviewOpen(false)}><section className="app-modal" role="dialog" aria-modal="true" onMouseDown={(e) => e.stopPropagation()}><button className="modal-close" onClick={() => setReviewOpen(false)}><X /></button><div className="eyebrow">Avis terrain</div><h2>Note ce spot</h2><form className="modal-form" onSubmit={submitReview}><label>Note<select name="rating" defaultValue="5">{[5,4,3,2,1].map((value) => <option key={value} value={value}>{value} / 5</option>)}</select></label><label>Commentaire<textarea name="comment" maxLength={1000} rows={4} placeholder="Décris la trace, le terrain, les conditions…" /></label><button className="button-primary">Publier l’avis</button></form></section></div>}
     </div>
   );

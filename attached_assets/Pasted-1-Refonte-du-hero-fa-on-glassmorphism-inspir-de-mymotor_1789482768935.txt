@@ -1,0 +1,27 @@
+1. Refonte du hero façon "glassmorphism" (inspiré de mymotorank.com)
+Je veux reprendre la mise en scène du hero de mymotorank.com, adaptée à Sentiz (VTT) avec notre palette noir/orange vif/jaune à la place de leur noir/or.
+
+Structure à répliquer :
+
+Fond : garde la photo actuelle de sentier forestier en fond, avec un dégradé sombre par-dessus pour la lisibilité (comme aujourd'hui).
+Mockup de téléphone au centre-droit du hero : un smartphone en 3D/perspective légère affichant un écran de l'appli Sentiz (par exemple l'écran d'un spot ou d'un défi "Cap ou pas" en cours de vote).
+Cartes flottantes en glassmorphism autour du téléphone : plusieurs petites cartes avec fond translucide/flouté (backdrop-filter: blur), bordure fine lumineuse orange ou jaune, légèrement inclinées/décalées façon composition éclatée autour du téléphone. Contenu suggéré pour ces cartes (remplace les stats moto par des stats VTT) :
+Une carte "distance/dénivelé" (ex : "42 KM · 1 280 M D+")
+Une carte "défi du jour" avec le pourcentage de vote Cap (ex : "72% CAP")
+Une carte badge rider (ex : "LÉA MOREL · ELITE")
+Une carte progression classement (ex : "CLASSEMENT #12 → #8 · +4 places")
+Anime légèrement ces cartes (flottement doux, hover qui accentue la lueur) pour donner un effet premium/vivant, comme sur le site de référence.
+Garde le titre et le texte actuels du hero ("TROUVE. ROULE. NOTE." etc.), positionnés à gauche comme aujourd'hui — seule la partie droite change pour intégrer ce nouveau visuel composé (téléphone + cartes).
+2. Ajustements du formulaire de connexion/inscription
+Dans la modale "Créer un compte" / "Connexion" :
+
+Champ Pseudo : pré-remplis-le avec un @ fixe en début de champ (comme un préfixe non supprimable — l'utilisateur ne voit que le @ au départ et tape son pseudo juste après). Le @ doit toujours rester affiché même si le champ est vide ou en cours de saisie.
+Champ Email : ajoute un placeholder d'exemple, du type toi@exemple.com, pour montrer le format attendu.
+Champ Mot de passe : limite-le à 8 caractères maximum (pas de minimum élevé nécessaire — l'idée est un mot de passe court et simple, pas plus de 8 caractères). Ajuste la validation et l'attribut maxlength en conséquence, et adapte le message d'aide sous le champ si besoin (ex: "8 caractères maximum").
+3. Priorité absolue au mobile
+La majorité des visiteurs viendront depuis leur téléphone (pas PC), donc tout ce qui précède doit être pensé mobile-first, pas juste "responsive en second plan" :
+
+Le nouveau hero (téléphone + cartes glassmorphism) doit être conçu pour bien s'afficher et rester lisible sur un écran de mobile en premier (les cartes ne doivent pas se chevaucher n'importe comment ni déborder de l'écran) — la version desktop peut être une adaptation de la version mobile, pas l'inverse.
+Sur mobile, si la composition téléphone + 4 cartes flottantes est trop chargée pour un petit écran, simplifie intelligemment : garde le téléphone central avec 2-3 cartes maximum autour, bien positionnées, plutôt que de tasser tous les éléments.
+La modale de connexion/inscription (avec le @, le placeholder email, le mot de passe 8 caractères) doit être testée et confortable au toucher sur mobile : champs assez grands, clavier adapté (type="email" pour l'email), boutons faciles à taper au doigt.
+Vérifie l'ensemble du site (pas que le hero) en simulant un écran mobile avant de considérer que c'est terminé.
