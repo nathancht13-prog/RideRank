@@ -8,33 +8,34 @@ export function Hero() {
   const { requireAuth } = useBikeRank();
   
   return (
-    <section className="relative min-h-[95vh] flex items-center pt-24 pb-20 overflow-hidden bg-zinc-950" id="accueil">
+    <section className="relative flex items-center pt-32 md:pt-40 pb-24 md:pb-32 overflow-hidden bg-zinc-950" id="accueil">
       <div className="absolute inset-0 z-0">
         <img src="/images/tim-foster-qrIy8dBzCVU-unsplash_1789402010865.jpg" alt="VTT Background" className="w-full h-full object-cover opacity-30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/90 to-transparent"></div>
+         <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/90 via-zinc-950/75 to-zinc-950/95"></div>
       </div>
       
-      <div className="container relative z-10 grid lg:grid-cols-12 gap-12 items-center">
-         <div className="lg:col-span-7 flex flex-col items-start animate-in fade-in slide-in-from-bottom-8 duration-700">
-           <div className="flex items-center gap-3 text-primary font-bold tracking-widest uppercase mb-6">
+      <div className="container relative z-10 flex flex-col items-center">
+         <div className="w-full flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-8 duration-700">
+           <div className="flex items-center justify-center gap-3 text-primary font-bold tracking-widest uppercase mb-6">
               <span className="w-8 h-0.5 bg-primary"></span>
               La meute t'attend
+              <span className="w-8 h-0.5 bg-primary"></span>
            </div>
-           <h1 className="text-7xl md:text-9xl lg:text-[10rem] font-bold uppercase leading-[0.85] tracking-tight mb-8">
+           <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold uppercase leading-[0.88] tracking-tight mb-8">
               Ride.<br/>
               <span className="text-primary drop-shadow-[0_0_15px_rgba(255,91,26,0.3)]">Progresse.</span><br/>
-              Monte en places.
+              <span className="whitespace-nowrap">Monte en places.</span>
            </h1>
-           <p className="text-xl md:text-2xl text-zinc-400 max-w-lg mb-10 leading-relaxed font-medium">
+           <p className="text-lg md:text-2xl text-zinc-400 max-w-2xl mb-10 leading-relaxed font-medium">
               Bike Rank, c'est le classement local des riders qui ne restent pas en bas. Tes kilomètres forgent ton rang.
            </p>
-           <button onClick={() => requireAuth('signup')} className="button-primary text-xl px-10 py-5 flex items-center gap-3 group" data-testid="cta-hero">
+           <button onClick={() => requireAuth('signup')} className="button-primary w-full max-w-xl text-base sm:text-xl px-5 sm:px-10 py-5 flex items-center gap-3 group" data-testid="cta-hero">
               Entrer dans le classement <ArrowRight className="group-hover:translate-x-1 transition-transform w-6 h-6" />
            </button>
-           <p className="text-lg text-zinc-500 mt-4 font-medium uppercase tracking-wider flex items-center gap-2">Connexion ou création de compte rapide</p>
+           <p className="w-full text-center text-sm sm:text-lg text-zinc-500 mt-4 font-medium uppercase tracking-wider">Connexion ou création de compte rapide</p>
         </div>
         
-         <div className="lg:col-span-5 relative animate-in fade-in slide-in-from-right-8 duration-700 delay-200 flex justify-center perspective-1000 z-10 py-8 lg:py-0">
+          <div className="relative animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 flex justify-center perspective-1000 z-10 mt-20 md:mt-28 py-8">
             <div className="relative w-[250px] h-[500px] lg:w-[320px] lg:h-[640px] glass-glow-strong rounded-[42px] lg:rounded-[48px] p-2 flex flex-col items-center justify-center lg:transform lg:rotate-y-[-15deg] lg:rotate-x-[5deg] hover:rotate-0 transition-transform duration-700">
               <div className="w-full h-full rounded-[40px] overflow-hidden relative bg-black">
                  <img src="/images/tim-foster-qrIy8dBzCVU-unsplash_1789402010865.jpg" className="absolute inset-0 w-full h-full object-cover opacity-50" alt="" />
