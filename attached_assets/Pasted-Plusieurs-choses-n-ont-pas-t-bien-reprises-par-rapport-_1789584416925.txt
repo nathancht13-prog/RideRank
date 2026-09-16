@@ -1,0 +1,25 @@
+Plusieurs choses n'ont pas été bien reprises par rapport au brief précédent. Voici les corrections, à vérifier aussi bien sur PC que sur mobile — chaque point doit être bien rendu sur les deux, pas juste sur l'un des deux formats.
+
+1. Corriger l'effet glassmorphism des cartes du hero (actuellement raté)
+Les cartes flottantes autour du téléphone dans le hero (ex : "VITESSE MAX", "RANG LOCAL") sont actuellement de simples blocs pleins sombres/orange, sans aucun effet de verre. Ce n'est pas ce qui était demandé. Il faut un vrai effet glassmorphism : fond semi-transparent avec flou d'arrière-plan (backdrop-filter: blur), fine bordure lumineuse qui "glow" (halo lumineux orange/jaune autour de la carte, effet néon doux), profondeur/ombre légère.
+
+Je vais envoyer dans le chat une capture de référence (version avec un rendu jaune/doré) — reproduis fidèlement ce style visuel (le flou, la transparence, le glow), en l'adaptant à notre palette orange/jaune Bike Rank.
+
+2. Intégrer le vrai logo Bike Rank
+Le logo généré automatiquement ne convient pas. Je vais envoyer une image du logo "Bike Rank" (version orange) dans le chat — intègre ce fichier tel quel dans le header à la place du logo actuel, et utilise-le aussi pour le favicon si le format s'y prête.
+
+3. Refaire le menu en haut à droite (actuellement beaucoup trop imposant)
+Le bloc compte actuel (gros cercle orange avec l'icône profil + le pseudo complet écrit en toutes lettres, ex "NATHAN.CHT1") est bien trop massif et prend trop de place dans le header, aussi bien sur PC que sur mobile.
+
+Remplace-le par un élément compact : soit une icône ☰ (trois petits traits), soit une petite icône de profil discrète — à toi de choisir la plus cohérente avec le reste du design, mais dans tous les cas nettement plus petite et sobre que l'actuelle, identique en taille/esprit entre PC et mobile.
+
+Ce menu doit s'ouvrir et donner accès à une navigation vers les différentes sections de la landing page : le hero ("Ride. Progresse. Monte en places."), Trouver un spot, Carte, Classement, FAQ, etc. — un clic sur une entrée du menu doit scroller/ramener vers la section correspondante de la page. Garde aussi l'accès aux actions de compte (mon profil, se déconnecter) dans ce même menu si l'utilisateur est connecté.
+
+4. Supprimer la section "Le Tableau Des Chefs"
+Retire complètement cette section du site (texte, composant, tout). Elle ne doit plus apparaître nulle part sur la landing page.
+
+5. Supprimer la section "Bike Rank en quelques mots"
+Retire complètement cette section (texte de présentation type "à propos") de la landing page.
+
+6. Étendre le glassmorphism à tous les boutons/éléments interactifs du site
+Applique le même esprit glassmorphism (fond semi-transparent, flou, légère bordure lumineuse) partout où il y a un bouton d'action sur le site, en particulier les boutons de connexion/inscription — pas seulement les cartes du hero. Ajoute aussi de petites animations sur ces éléments (au survol/tap : légère montée en lumière, effet de profondeur, transition douce) pour donner une sensation vivante et premium sur l'ensemble du site, pas juste dans le hero.

@@ -1,4 +1,4 @@
-import { Hero, SpotFinder, MapSection, RankingSection, Progression, FAQSection, AboutSection } from '../components/LandingSections';
+import { Hero, SpotFinder, MapSection, Progression, FAQSection } from '../components/LandingSections';
 
 export default function LandingPage() {
   return (
@@ -6,10 +6,8 @@ export default function LandingPage() {
       <Hero />
       <SpotFinder />
       <MapSection />
-      <RankingSection />
       <Progression />
       <FAQSection />
-      <AboutSection />
     </main>
   );
 }

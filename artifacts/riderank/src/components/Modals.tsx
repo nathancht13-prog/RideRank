@@ -47,8 +47,8 @@ export function AuthModal() {
     <div className="modal-backdrop" onMouseDown={() => setAuthOpen(false)}>
       <section className="app-modal" role="dialog" aria-modal="true" onMouseDown={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={() => setAuthOpen(false)}><X size={24} /></button>
-        <div className="eyebrow">Entre dans la course</div>
-        <h2>{authMode === 'login' ? 'Connexion' : 'Créer un compte'}</h2>
+        <div className="eyebrow mb-2">Entre dans la course</div>
+        <h2 className="drop-shadow-[0_0_15px_rgba(255,91,26,0.3)]">{authMode === 'login' ? 'Connexion' : 'Créer un compte'}</h2>
         
         <div className="auth-tabs">
           <button className={authMode === 'login' ? 'active' : ''} onClick={() => { setAuthMode('login'); setError(''); }}>Connexion</button>
@@ -112,8 +112,8 @@ export function ProfileModal() {
     <div className="modal-backdrop" onMouseDown={() => setProfileOpen(false)}>
       <section className="app-modal" role="dialog" aria-modal="true" onMouseDown={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={() => setProfileOpen(false)}><X size={24} /></button>
-        <div className="eyebrow">Identité</div>
-        <h2>Ton profil</h2>
+        <div className="eyebrow mb-2">Identité</div>
+        <h2 className="drop-shadow-[0_0_15px_rgba(255,91,26,0.3)]">Ton profil</h2>
         <form className="modal-form" onSubmit={submitProfile}>
           <label>Pseudo
             <div className="input-with-prefix">
@@ -190,8 +190,8 @@ export function ActivityModal() {
     <div className="modal-backdrop" onMouseDown={() => setActivityOpen(false)}>
       <section className="app-modal" role="dialog" aria-modal="true" onMouseDown={e => e.stopPropagation()}>
         <button className="modal-close" onClick={() => setActivityOpen(false)}><X size={24} /></button>
-        <div className="eyebrow">Nouvelle trace</div>
-        <h2>Ajouter une sortie</h2>
+        <div className="eyebrow mb-2">Nouvelle trace</div>
+        <h2 className="drop-shadow-[0_0_15px_rgba(255,91,26,0.3)]">Ajouter une sortie</h2>
         <p className="text-lg text-zinc-400 font-medium mb-8">Les kilomètres réels font grimper ton rang. Sois honnête avec toi-même.</p>
         <form className="modal-form" onSubmit={handleSubmit}>
           <label>Date de la sortie
@@ -262,8 +262,8 @@ export function ReviewModal() {
     <div className="modal-backdrop" onMouseDown={() => setReviewOpen(false)}>
       <section className="app-modal" role="dialog" aria-modal="true" onMouseDown={e => e.stopPropagation()}>
         <button className="modal-close" onClick={() => setReviewOpen(false)}><X size={24} /></button>
-        <div className="eyebrow">Avis terrain</div>
-        <h2>Note ce spot</h2>
+        <div className="eyebrow mb-2">Avis terrain</div>
+        <h2 className="drop-shadow-[0_0_15px_rgba(255,91,26,0.3)]">Note ce spot</h2>
         <form className="modal-form" onSubmit={submitReview}>
           <label>Note
             <select name="rating" defaultValue="5">
@@ -386,19 +386,17 @@ export function ShareCardModal() {
             </div>
 
             {/* Fixed aspect ratio tall story card */}
-             <div className="relative w-full aspect-[9/16] bg-[#0c0906] p-8 flex flex-col justify-start items-center text-center overflow-hidden shadow-2xl" style={{ border: '2px solid rgba(255, 91, 26, 0.1)', borderRadius: '32px' }} id="share-card">
+             <div className="relative w-full aspect-[9/16] bg-[#0c0906] p-8 flex flex-col justify-start items-center text-center overflow-hidden shadow-2xl" style={{ border: '1px solid rgba(255, 150, 0, 0.4)', borderRadius: '32px', boxShadow: '0 0 40px rgba(255, 100, 0, 0.2), inset 0 0 20px rgba(255, 160, 20, 0.1)' }} id="share-card">
                
                {/* Background Glow */}
-               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-primary/5 blur-[100px] rounded-full pointer-events-none"></div>
+               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/10 blur-[80px] rounded-full pointer-events-none"></div>
 
-               <div className="text-center font-display text-5xl font-black italic mt-6 z-10">
-                  <span className="text-white">Bike</span> <span className="text-[#ff5b1a]">Rank</span>
-               </div>
+               <img src="/brand/bike-rank-logo-transparent.png" alt="Bike Rank" className="h-16 object-contain mt-8 z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]" />
 
                <div className="flex justify-between items-center w-full mt-14 z-10">
                   <div className="flex flex-col items-center flex-1">
                      <div className="flex items-center gap-2 text-[#ff5b1a] text-sm font-bold tracking-widest uppercase mb-3">
-                        <MapPin size={20} strokeWidth={2.5} /> Distance
+                        <MapPin size={20} strokeWidth={2.5} className="drop-shadow-[0_0_8px_rgba(255,91,26,0.6)]" /> Distance
                      </div>
                      <div className="text-[56px] leading-none font-bold text-white tracking-tight">
                         {activityToShow.distance_km.toString().replace('.', ',')} <span className="text-3xl text-[#ff5b1a] font-medium ml-1">km</span>
@@ -415,11 +413,11 @@ export function ShareCardModal() {
                   </div>
                </div>
 
-               <div className="w-full border border-[#ff5b1a] rounded-[24px] py-8 px-6 mt-12 relative shadow-[0_0_30px_rgba(255,91,26,0.15)] flex flex-col items-center justify-center bg-[#0a0604] z-10">
+               <div className="w-full border border-[#ff5b1a] rounded-[24px] py-8 px-6 mt-12 relative shadow-[0_0_30px_rgba(255,91,26,0.2)] flex flex-col items-center justify-center bg-[#0a0604]/80 backdrop-blur-md z-10">
                   <div className="text-[#ff5b1a] text-sm font-bold tracking-widest uppercase mb-4">Vitesse maximale</div>
                   <div className="flex items-center justify-center gap-4">
-                     <Gauge className="text-[#ff5b1a] w-14 h-14" strokeWidth={2.5} />
-                     <div className="text-[64px] leading-none font-bold text-white tracking-tight">
+                     <Gauge className="text-[#ff5b1a] w-14 h-14 drop-shadow-[0_0_10px_rgba(255,91,26,0.5)]" strokeWidth={2.5} />
+                     <div className="text-[64px] leading-none font-bold text-white tracking-tight drop-shadow-md">
                         {activityToShow.max_speed_kmh || 38} <span className="text-[40px] text-[#ff5b1a] font-medium ml-1">km/h</span>
                      </div>
                   </div>
@@ -428,8 +426,8 @@ export function ShareCardModal() {
                <div className="flex flex-col items-center mt-12 z-10 w-full">
                   <div className="flex items-center justify-center gap-6 w-full">
                      <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#ff5b1a]/50"></div>
-                     <Trophy className="text-[#ff5b1a] w-12 h-12" strokeWidth={2} />
-                     <div className="text-[64px] leading-none font-bold text-[#ff5b1a]">{rankNumber}e</div>
+                     <Trophy className="text-[#ff5b1a] w-12 h-12 drop-shadow-[0_0_10px_rgba(255,91,26,0.5)]" strokeWidth={2} />
+                     <div className="text-[64px] leading-none font-bold text-[#ff5b1a] drop-shadow-[0_0_15px_rgba(255,91,26,0.4)]">{rankNumber}e</div>
                      <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#ff5b1a]/50"></div>
                   </div>
                   <div className="text-[#ff5b1a] text-lg font-bold tracking-[0.2em] uppercase mt-4 text-center w-full">
