@@ -1,5 +1,5 @@
 import { Route, Switch } from 'wouter';
-import { SentizProvider } from './SentizContext';
+import { BikeRankProvider } from './BikeRankContext';
 import { Header, Footer, Toast } from './components/Layout';
 import { Modals } from './components/Modals';
 import LandingPage from './pages/LandingPage';
@@ -7,7 +7,7 @@ import LegalPage from './pages/LegalPage';
 
 export default function App() {
   return (
-    <SentizProvider>
+    <BikeRankProvider>
       <div className="site-shell bg-zinc-950 min-h-[100dvh] text-white selection:bg-primary selection:text-black">
         <Header />
         
@@ -28,6 +28,6 @@ export default function App() {
         <Modals />
         <Toast />
       </div>
-    </SentizProvider>
+    </BikeRankProvider>
   );
 }

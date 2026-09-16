@@ -13,6 +13,9 @@ export type Review = {
 export type RideActivity = {
   id: string; user_id: string; distance_km: number; elevation_m: number;
   activity_date: string; created_at: string;
+  duration_seconds: number;
+  max_speed_kmh: number;
+  discipline: 'Enduro' | 'XC' | 'DH' | 'e-VTT' | 'Bike park';
 };
 export type RankedProfile = {
   id: string;

@@ -1,0 +1,37 @@
+Renommer "Sentiz" en "Bike Rank"
+Remplace partout où "Sentiz" apparaît (header, footer, meta title, textes de contenu, favicon alt) par "Bike Rank".
+
+Génère toi-même un logo simple pour "Bike Rank" (icône + éventuellement le texte, dans notre palette noir/orange/jaune) et intègre-le dans le header à la place du logo texte actuel, ainsi qu'en favicon/app icon. Reste sobre : un logo simple et lisible plutôt que quelque chose de surchargé.
+
+1bis. Uniformiser la typographie sur tout le site
+Repère la police utilisée actuellement pour le grand titre du hero (l'accroche principale) et applique cette même police à l'ensemble du site (tous les titres, sous-titres, boutons, textes de contenu, navigation...), à la place du mélange de polices actuel s'il y en a un.
+
+En gardant cette police unique partout, conserve quand même une vraie hiérarchie visuelle entre les niveaux : les titres doivent rester nettement plus grands/gras que les sous-titres, qui restent eux-mêmes plus marqués que le texte courant. L'idée est une police cohérente sur tout le site, mais avec des tailles/graisses différentes selon qu'il s'agit d'un titre, d'un sous-titre ou d'un texte normal.
+
+2. Simplifier le hero
+Supprime la carte teaser "#1 CE MOIS-CI" dans le hero — elle fait doublon avec la section "Classement" déjà présente plus bas sur la page, elle n'apporte rien à cet endroit.
+
+Change l'accroche principale tout en haut (actuellement quelque chose comme "La meute t'attend" / "Chaque trace compte") pour :
+
+RIDE.
+PROGRESSE.
+MONTE EN PLACES.
+Garde le sous-texte actuel sous l'accroche si il fonctionne toujours bien, sinon ajuste-le légèrement pour rester cohérent avec cette nouvelle accroche.
+
+Renforce le véritable effet glassmorphism sur les cartes flottantes autour du mockup de téléphone (celles avec les stats VTT) : vrai flou d'arrière-plan (backdrop-filter: blur(...)), fond semi-transparent, bordure fine lumineuse orange/jaune — pas un simple fond orange uni. Réfère-toi visuellement à l'effet sur mymotorank.com : les cartes doivent laisser transparaître le fond derrière elles tout en gardant du contraste et de la lisibilité.
+
+3. Section carte : la rapprocher visuellement de Google Maps
+La section carte actuelle (style abstrait, triangles/lignes stylisées) doit ressembler davantage à une vraie carte type Google Maps : rendu plus réaliste (couleurs de carte classiques, routes/reliefs visibles, épingles de localisation nettes). Pas besoin d'intégrer une vraie API maintenant — je fournirai une clé d'API Google Maps séparément plus tard. Pour l'instant, structure juste le composant carte de façon isolée et modulaire, pour que le remplacement par une vraie intégration Google Maps soit simple à faire ensuite sans tout reconstruire.
+
+4. Supprimer la section "Le palmarès local" (pour l'instant)
+Retire cette section/cet onglet du site. Elle fait doublon avec la section "Classement" globale tant qu'on n'a pas assez de données réelles par région pour la justifier. Elle pourra revenir plus tard sous forme de filtre "par région" directement dans la section Classement, une fois qu'il y aura une vraie densité d'utilisateurs par zone géographique.
+
+5. Nouvelle fonctionnalité : carte de stats partageable
+Ajoute la possibilité, après une sortie/session enregistrée, de générer une carte visuelle de stats prête à être partagée (format story réseaux sociaux). Elle doit inclure :
+
+Distance parcourue
+Temps total
+Vitesse maximale
+Position au classement dans une catégorie (ex : "13e plus rapide en enduro")
+Un petit graphique de profil (dénivelé ou vitesse au fil du parcours)
+Prévois un écran ou un bouton "Partager mes stats" qui génère cette carte à partir des données de la sortie. Je fournirai séparément dans le chat un exemple visuel précis du rendu attendu (style, mise en page) pour que tu puisses t'en inspirer fidèlement au niveau du design.

@@ -42,7 +42,7 @@ export default function LegalPage() {
           <section>
             <h2 className="text-2xl font-display font-bold uppercase text-white mb-6 tracking-wide border-b border-white/10 pb-4">4. Données personnelles</h2>
             <div className="space-y-4 text-lg leading-relaxed">
-               <p>Sentiz s'engage à ce que la collecte et le traitement de vos données soient conformes au règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés.</p>
+               <p>Bike Rank s'engage à ce que la collecte et le traitement de vos données soient conformes au règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés.</p>
                <p>Les données collectées (pseudo, email, statistiques de ride) sont utilisées uniquement dans le cadre du fonctionnement de l'application (classement local, profil public). Vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles en nous contactant.</p>
             </div>
           </section>

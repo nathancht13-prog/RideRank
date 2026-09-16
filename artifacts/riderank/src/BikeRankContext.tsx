@@ -3,7 +3,7 @@ import { supabase } from './lib/supabase';
 import type { Session } from '@supabase/supabase-js';
 import type { Spot, Profile, Review, RideActivity, RankedProfile } from './types';
 
-interface SentizState {
+interface BikeRankState {
   session: Session | null;
   profile: Profile | null;
   spots: Spot[];
@@ -17,6 +17,8 @@ interface SentizState {
   profileOpen: boolean; setProfileOpen: (v: boolean) => void;
   reviewOpen: boolean; setReviewOpen: (v: boolean) => void;
   activityOpen: boolean; setActivityOpen: (v: boolean) => void;
+  shareOpen: boolean; setShareOpen: (v: boolean) => void;
+  latestActivity: RideActivity | null; setLatestActivity: (v: RideActivity | null) => void;
   selectedSpot: string | null; setSelectedSpot: (v: string | null) => void;
   notice: string; setNotice: (v: string) => void;
   
@@ -24,9 +26,9 @@ interface SentizState {
   refreshData: () => Promise<void>;
 }
 
-const SentizContext = createContext<SentizState | null>(null);
+const BikeRankContext = createContext<BikeRankState | null>(null);
 
-export function SentizProvider({ children }: { children: ReactNode }) {
+export function BikeRankProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [spots, setSpots] = useState<Spot[]>([]);
@@ -39,6 +41,8 @@ export function SentizProvider({ children }: { children: ReactNode }) {
   const [profileOpen, setProfileOpen] = useState(false);
   const [reviewOpen, setReviewOpen] = useState(false);
   const [activityOpen, setActivityOpen] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
+  const [latestActivity, setLatestActivity] = useState<RideActivity | null>(null);
   const [selectedSpot, setSelectedSpot] = useState<string | null>(null);
   const [notice, setNotice] = useState('');
 
@@ -51,30 +55,20 @@ export function SentizProvider({ children }: { children: ReactNode }) {
     ]);
 
     setSpots((spotsRes.data ?? []) as Spot[]);
-    
-    const loadedProfiles = (profilesRes.data ?? []) as Profile[];
-    setProfiles(loadedProfiles);
-    
+    setProfiles((profilesRes.data ?? []) as Profile[]);
     setReviews((reviewsRes.data ?? []) as Review[]);
-    
     if (!activitiesRes.error) {
        setActivities((activitiesRes.data ?? []) as RideActivity[]);
     }
   };
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-       setSession(data.session);
-    });
-    const { data } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      setSession(nextSession);
-    });
+    supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    const { data } = supabase.auth.onAuthStateChange((_event, nextSession) => setSession(nextSession));
     return () => data.subscription.unsubscribe();
   }, []);
 
-  useEffect(() => {
-    loadPublicData();
-  }, []);
+  useEffect(() => { loadPublicData(); }, []);
 
   useEffect(() => {
     if (session?.user && profiles.length > 0) {
@@ -120,15 +114,17 @@ export function SentizProvider({ children }: { children: ReactNode }) {
     session, profile, spots, rankedProfiles, activities, profiles, reviews,
     authOpen, setAuthOpen, authMode, setAuthMode,
     profileOpen, setProfileOpen, reviewOpen, setReviewOpen,
-    activityOpen, setActivityOpen, selectedSpot, setSelectedSpot,
+    activityOpen, setActivityOpen, shareOpen, setShareOpen,
+    latestActivity, setLatestActivity,
+    selectedSpot, setSelectedSpot,
     notice, setNotice, requireAuth, refreshData: loadPublicData
   };
 
-  return <SentizContext.Provider value={value}>{children}</SentizContext.Provider>;
+  return <BikeRankContext.Provider value={value}>{children}</BikeRankContext.Provider>;
 }
 
-export function useSentiz() {
-  const ctx = useContext(SentizContext);
-  if (!ctx) throw new Error('useSentiz must be used within SentizProvider');
+export function useBikeRank() {
+  const ctx = useContext(BikeRankContext);
+  if (!ctx) throw new Error('useBikeRank must be used within BikeRankProvider');
   return ctx;
 }
