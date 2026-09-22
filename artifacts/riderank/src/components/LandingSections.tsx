@@ -101,7 +101,17 @@ export function Hero() {
 
 export function ShareStats() {
    return (
-      <section className="py-24 bg-white text-black relative" id="partage">
+      <section className="py-24 bg-white text-black relative overflow-hidden" id="partage">
+         <div className="absolute inset-0">
+            <img
+              src="/images/share-stats-wheelies.jpg"
+              alt=""
+              className="w-full h-full object-cover object-center opacity-45 saturate-[.62] contrast-[.88]"
+            />
+            <div className="absolute inset-0 bg-white/55"></div>
+            <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/25 to-transparent"></div>
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-black/20"></div>
+         </div>
          <div className="container relative z-10 flex flex-col items-center">
             <div className="text-center mb-16 max-w-3xl">
                <div className="eyebrow mb-4">Partage tes exploits</div>
@@ -411,7 +421,7 @@ export function Progression() {
    return (
        <section className="py-32 bg-white text-black relative overflow-hidden" id="progression">
          <div className="absolute inset-0 z-0">
-            <img src="/images/pexels-simeon-theartist-18761634_1790084330601.jpg" alt="Progression Background" className="w-full h-full object-cover opacity-50" />
+            <img src="/images/progression-forest-riders.jpg" alt="Deux vététistes roulant dans une forêt" className="w-full h-full object-cover object-center opacity-45 saturate-[.62] contrast-[.88]" />
             <div className="absolute inset-0 bg-white/55"></div>
             <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/70 to-transparent"></div>
             <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-black/70"></div>
