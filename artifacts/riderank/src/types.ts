@@ -15,11 +15,24 @@ export type RideActivity = {
   activity_date: string; created_at: string;
   duration_seconds: number;
   max_speed_kmh: number;
+  average_speed_kmh: number;
+  track_points: GpsPoint[] | null;
+  source: 'manual' | 'gps';
+  started_at: string | null;
+  ended_at: string | null;
   discipline: 'Enduro' | 'XC' | 'DH' | 'e-VTT' | 'Bike park';
+};
+export type GpsPoint = {
+  lat: number;
+  lng: number;
+  timestamp: number;
+  speed_kmh: number;
+  accuracy: number;
 };
 export type RankedProfile = {
   id: string;
   distance: number;
   rank: number;
   profile?: Profile;
+  isDemo?: boolean;
 };

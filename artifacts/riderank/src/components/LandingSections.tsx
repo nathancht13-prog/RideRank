@@ -5,7 +5,9 @@ import type { Spot } from '../types';
 import { BikeMap } from './BikeMap';
 
 export function Hero() {
-  const { requireAuth } = useBikeRank();
+  const { requireAuth, rankedProfiles } = useBikeRank();
+  const monthlyLeader = rankedProfiles[0];
+  const monthLabel = new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(new Date());
   
   return (
     <section className="relative flex items-center pt-32 md:pt-40 pb-24 md:pb-32 overflow-hidden bg-zinc-950" id="accueil">
@@ -28,13 +30,13 @@ export function Hero() {
            {/* Teaser Leaderboard Widget */}
            <div className="glass-glow mb-10 px-6 py-4 flex items-center gap-6 rounded-2xl">
               <div className="flex flex-col items-start text-left">
-                 <div className="text-primary text-xs font-bold uppercase tracking-widest mb-1">#1 Ce mois-ci · Septembre</div>
-                 <div className="text-white text-2xl font-bold uppercase leading-none">Le Grimpeur</div>
+                 <div className="text-primary text-xs font-bold uppercase tracking-widest mb-1">#1 Ce mois-ci · {monthLabel}</div>
+                 <div className="text-white text-2xl font-bold uppercase leading-none">{monthlyLeader?.profile?.pseudo || 'Le Grimpeur'}</div>
                  <div className="text-zinc-400 text-sm font-medium">Le rider à battre</div>
               </div>
               <div className="w-[1px] h-12 bg-white/10 mx-2"></div>
               <div className="text-5xl font-bold text-white drop-shadow-[0_0_10px_rgba(255,91,26,0.3)]">
-                 56 <span className="text-primary text-2xl">km</span>
+                  {(monthlyLeader?.distance ?? 56).toLocaleString('fr-FR', { maximumFractionDigits: 1 })} <span className="text-primary text-2xl">km</span>
               </div>
            </div>
 
@@ -309,7 +311,13 @@ export function MapSection() {
 }
 
 export function LeaderboardSection() {
-   const { profile } = useBikeRank();
+    const { profile, rankedProfiles } = useBikeRank();
+    const monthLabel = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric' }).format(new Date());
+    const currentUserRank = profile ? rankedProfiles.find((item) => item.id === profile.id) : null;
+    const leader = rankedProfiles[0];
+    const distanceToLeader = currentUserRank && leader
+      ? Math.max(0, leader.distance - currentUserRank.distance)
+      : 0;
    return (
        <section className="py-32 bg-black text-white relative overflow-hidden" id="classement">
           <div className="absolute inset-0">
@@ -324,16 +332,16 @@ export function LeaderboardSection() {
                 <p className="text-zinc-300 text-xl font-medium mb-12 max-w-md leading-relaxed">Les kilomètres réellement roulés te font avancer. Suis ta position en France, dans ta région ou entre amis.</p>
 
                <div className="mt-12 hidden lg:block">
-                    <div className="text-white/55 text-sm font-bold uppercase tracking-widest mb-2">Septembre 2026</div>
+                    <div className="text-white/55 text-sm font-bold uppercase tracking-widest mb-2">{monthLabel}</div>
                   <div className="flex items-end gap-6">
-                     <div className="text-8xl font-bold text-primary leading-none">#2</div>
+                      <div className="text-8xl font-bold text-primary leading-none">#{currentUserRank?.rank ?? '—'}</div>
                      <div className="pb-2">
-                        <div className="text-2xl font-bold uppercase">{profile?.pseudo || 'RIDERPRO'}</div>
-                        <div className="text-zinc-500 font-medium">149,2 km ce mois-ci</div>
+                         <div className="text-2xl font-bold uppercase">{profile?.pseudo || 'À TOI DE ROULER'}</div>
+                         <div className="text-zinc-500 font-medium">{(currentUserRank?.distance ?? 0).toLocaleString('fr-FR', { maximumFractionDigits: 1 })} km ce mois-ci</div>
                      </div>
                   </div>
                   <div className="text-primary font-bold text-sm mt-4 flex items-center gap-2">
-                     <ArrowUp size={16}/> Plus que 2,7 km pour passer #1
+                      <ArrowUp size={16}/> {currentUserRank ? `Plus que ${distanceToLeader.toLocaleString('fr-FR', { maximumFractionDigits: 1 })} km pour atteindre la tête` : 'Enregistre ta première sortie GPS'}
                   </div>
                </div>
             </div>
@@ -355,13 +363,12 @@ export function LeaderboardSection() {
                   </div>
 
                   {/* Toggle */}
-                  <div className="bg-black/50 p-1 rounded-xl flex mb-6">
-                     <button className="flex-1 py-3 bg-primary text-black font-bold uppercase text-sm rounded-lg">Ce mois-ci</button>
-                     <button className="flex-1 py-3 text-zinc-400 hover:text-white font-bold uppercase text-sm transition-colors">Total</button>
+                   <div className="bg-black/50 p-1 rounded-xl flex mb-6">
+                      <div className="flex-1 py-3 bg-primary text-black text-center font-bold uppercase text-sm rounded-lg">Classement de ce mois</div>
                   </div>
 
                   <div className="flex justify-between items-center text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">
-                     <span>Septembre 2026</span>
+                      <span>{monthLabel}</span>
                      <span className="flex items-center gap-1"><MapPin size={12}/> France</span>
                   </div>
 
@@ -370,15 +377,15 @@ export function LeaderboardSection() {
                      <div className="absolute top-0 right-0 p-4 opacity-10"><Crown size={64}/></div>
                      <div className="text-primary text-xs font-bold uppercase tracking-widest mb-3">Ta position</div>
                      <div className="flex items-center gap-6 mb-3">
-                        <div className="text-6xl font-bold text-white leading-none">#3</div>
+                         <div className="text-6xl font-bold text-white leading-none">#{currentUserRank?.rank ?? '—'}</div>
                         <div>
                            <div className="text-xl font-bold uppercase">{profile?.pseudo || 'Toi'}</div>
                            <div className="text-zinc-400 text-sm">France</div>
                         </div>
                      </div>
-                     <div className="text-sm font-bold text-zinc-300">61,9 km ce mois-ci</div>
+                      <div className="text-sm font-bold text-zinc-300">{(currentUserRank?.distance ?? 0).toLocaleString('fr-FR', { maximumFractionDigits: 1 })} km ce mois-ci</div>
                      <div className="text-primary text-xs font-bold mt-3 flex items-center gap-2 border-t border-primary/20 pt-3">
-                        <ArrowUp size={14}/> Plus que 2,3 km pour passer #2
+                         <ArrowUp size={14}/> {currentUserRank ? `${distanceToLeader.toLocaleString('fr-FR', { maximumFractionDigits: 1 })} km jusqu'au leader` : 'Démarre une sortie pour entrer au classement'}
                      </div>
                   </div>
 
@@ -388,12 +395,14 @@ export function LeaderboardSection() {
                      <span>Km Validés</span>
                   </div>
                   <div className="space-y-4">
-                     {[
-                        { pos: 1, name: 'ENDUROMAX', km: '68,7' },
-                        { pos: 2, name: 'TRAILKING', km: '64,2' },
-                        { pos: 3, name: profile?.pseudo || 'TOI', km: '61,9', isUser: true },
-                        { pos: 4, name: 'ROOTSRIDER', km: '60,3' },
-                     ].map((rider) => (
+                     {rankedProfiles.slice(0, 4).map((item) => {
+                        const rider = {
+                          pos: item.rank,
+                          name: item.profile?.pseudo || 'RIDER',
+                          km: item.distance.toLocaleString('fr-FR', { maximumFractionDigits: 1 }),
+                          isUser: item.id === profile?.id,
+                        };
+                        return (
                         <div key={rider.pos} className={`flex items-center justify-between py-2 border-b border-white/5 last:border-0 ${rider.isUser ? 'bg-white/5 -mx-4 px-4 rounded-lg' : ''}`}>
                            <div className="flex items-center gap-4">
                               <span className={`font-bold w-4 text-center ${rider.isUser ? 'text-primary' : 'text-zinc-500'}`}>{rider.pos}</span>
@@ -403,7 +412,7 @@ export function LeaderboardSection() {
                            </div>
                            <div className="font-bold">{rider.km} <span className="text-zinc-500 text-xs">km</span></div>
                         </div>
-                     ))}
+                     )})}
                   </div>
 
                   <div className="text-center text-zinc-600 text-xs font-medium mt-8 border-t border-white/10 pt-4">

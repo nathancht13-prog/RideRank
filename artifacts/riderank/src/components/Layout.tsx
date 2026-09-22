@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
-import { ChevronDown, LogOut, Menu, Pencil, Share2, X, Plus, Trophy, Check } from 'lucide-react';
+import { ChevronDown, LogOut, Menu, Pencil, Share2, X, Plus, Trophy, Check, Navigation } from 'lucide-react';
 import { useBikeRank } from '../BikeRankContext';
 
 const avatarFallback = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%231a1a1a'/%3E%3Ccircle cx='50' cy='38' r='16' fill='%23ff5b1a'/%3E%3Cpath d='M18 92Q50 56 82 92' fill='%23ff5b1a'/%3E%3C/svg%3E";
@@ -69,7 +69,8 @@ export function Header() {
                     <img src={profile?.avatar_url || avatarFallback} className="w-10 h-10 rounded-full border border-primary/50 object-cover" alt="" />
                     <span className="font-bold truncate text-lg">{profile?.pseudo || 'Mon profil'}</span>
                   </div>
-                  <button onClick={() => { setActivityOpen(true); setMenuOpen(false); }} className="menu-link text-left flex items-center gap-3"><Plus size={20} /> Ajouter sortie</button>
+                   <Link href="/ride" onClick={() => setMenuOpen(false)} className="menu-link text-left flex items-center gap-3 text-primary"><Navigation size={20} /> Démarrer une sortie</Link>
+                   <button onClick={() => { setActivityOpen(true); setMenuOpen(false); }} className="menu-link text-left flex items-center gap-3"><Plus size={20} /> Ajouter une sortie manuelle</button>
                   <button onClick={() => { setShareOpen(true); setMenuOpen(false); }} className="menu-link text-left flex items-center gap-3 text-accent"><Trophy size={20} /> Mes stats</button>
                   <button onClick={() => { setProfileOpen(true); setMenuOpen(false); }} className="menu-link text-left flex items-center gap-3"><Pencil size={20} /> Profil</button>
                   <button onClick={handleLogout} className="menu-link text-left flex items-center gap-3 text-zinc-500 hover:text-white"><LogOut size={20} /> Déconnexion</button>

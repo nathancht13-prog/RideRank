@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useMemo, type ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { supabase } from './lib/supabase';
 import type { Session } from '@supabase/supabase-js';
 import type { Spot, Profile, Review, RideActivity, RankedProfile } from './types';
@@ -35,6 +35,7 @@ export function BikeRankProvider({ children }: { children: ReactNode }) {
   const [activities, setActivities] = useState<RideActivity[]>([]);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [rankedProfiles, setRankedProfiles] = useState<RankedProfile[]>([]);
   
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
@@ -47,18 +48,54 @@ export function BikeRankProvider({ children }: { children: ReactNode }) {
   const [notice, setNotice] = useState('');
 
   const loadPublicData = async () => {
-    const [spotsRes, profilesRes, reviewsRes, activitiesRes] = await Promise.all([
+    const [spotsRes, profilesRes, reviewsRes, leaderboardRes] = await Promise.all([
       supabase.from('spots').select('*').order('average_rating', { ascending: false }),
       supabase.from('profiles').select('*'),
       supabase.from('spot_reviews').select('user_id,spot_id,rating,comment'),
-      supabase.from('ride_activities').select('*')
+      supabase.rpc('monthly_ride_leaderboard')
     ]);
 
     setSpots((spotsRes.data ?? []) as Spot[]);
-    setProfiles((profilesRes.data ?? []) as Profile[]);
+    const nextProfiles = (profilesRes.data ?? []) as Profile[];
+    setProfiles(nextProfiles);
     setReviews((reviewsRes.data ?? []) as Review[]);
-    if (!activitiesRes.error) {
-       setActivities((activitiesRes.data ?? []) as RideActivity[]);
+
+    const realRanks = ((leaderboardRes.data ?? []) as Array<{
+      id: string; pseudo: string; avatar_url: string | null; ville: string | null;
+      distance: number; rank: number;
+    }>).map((item) => ({
+      id: item.id,
+      distance: Number(item.distance),
+      rank: Number(item.rank),
+      profile: nextProfiles.find((profileItem) => profileItem.id === item.id) ?? {
+        id: item.id,
+        pseudo: item.pseudo,
+        avatar_url: item.avatar_url,
+        ville: item.ville,
+        bio: null,
+        created_at: '',
+      },
+    }));
+
+    const demoRiders: RankedProfile[] = [
+      { id: 'demo-enduromax', distance: 68.7, rank: 0, isDemo: true, profile: { id: 'demo-enduromax', pseudo: 'ENDUROMAX', avatar_url: null, ville: 'France', bio: null, created_at: '' } },
+      { id: 'demo-trailking', distance: 64.2, rank: 0, isDemo: true, profile: { id: 'demo-trailking', pseudo: 'TRAILKING', avatar_url: null, ville: 'France', bio: null, created_at: '' } },
+      { id: 'demo-le-grimpeur', distance: 56, rank: 0, isDemo: true, profile: { id: 'demo-le-grimpeur', pseudo: 'LE GRIMPEUR', avatar_url: null, ville: 'France', bio: null, created_at: '' } },
+    ];
+    const mergedRanks = [...realRanks, ...demoRiders]
+      .sort((a, b) => b.distance - a.distance)
+      .map((item, index) => ({ ...item, rank: index + 1 }));
+    setRankedProfiles(mergedRanks);
+
+    if (session?.user) {
+      const activitiesRes = await supabase
+        .from('ride_activities')
+        .select('*')
+        .eq('user_id', session.user.id)
+        .order('created_at', { ascending: false });
+      if (!activitiesRes.error) setActivities((activitiesRes.data ?? []) as RideActivity[]);
+    } else {
+      setActivities([]);
     }
   };
 
@@ -68,7 +105,7 @@ export function BikeRankProvider({ children }: { children: ReactNode }) {
     return () => data.subscription.unsubscribe();
   }, []);
 
-  useEffect(() => { loadPublicData(); }, []);
+  useEffect(() => { loadPublicData(); }, [session?.user?.id]);
 
   useEffect(() => {
     if (session?.user && profiles.length > 0) {
@@ -78,30 +115,6 @@ export function BikeRankProvider({ children }: { children: ReactNode }) {
        setProfile(null);
     }
   }, [session, profiles]);
-
-  const rankedProfiles = useMemo(() => {
-    const currentMonth = new Date().getMonth();
-    const currentYear = new Date().getFullYear();
-    const monthActivities = activities.filter(a => {
-      if (!a.activity_date) return false;
-      const d = new Date(a.activity_date);
-      return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
-    });
-
-    const userDistances = new Map<string, number>();
-    monthActivities.forEach(a => {
-      userDistances.set(a.user_id, (userDistances.get(a.user_id) || 0) + (Number(a.distance_km) || 0));
-    });
-
-    return Array.from(userDistances.entries())
-      .map(([id, distance]) => ({
-        id,
-        distance: Math.round(distance * 10) / 10,
-        profile: profiles.find(p => p.id === id)
-      }))
-      .sort((a, b) => b.distance - a.distance)
-      .map((item, index) => ({ ...item, rank: index + 1 }));
-  }, [activities, profiles]);
 
   const requireAuth = (mode: 'login' | 'signup' = 'login') => {
     if (session) return true;

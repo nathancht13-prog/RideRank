@@ -1,0 +1,18 @@
+Le site (comme TripRank/MotoRank) doit maintenant enregistrer de vraies sorties via le GPS du téléphone, pour que le classement soit basé sur de vraies données plutôt que sur des chiffres d'exemple.
+
+Limite technique à respecter
+C'est un site web, pas une appli native : le suivi GPS ne peut fonctionner que tant que l'onglet reste ouvert et l'écran allumé. Pas de suivi en arrière-plan écran éteint (limite du navigateur, pas du code). Affiche un petit message clair à l'utilisateur au démarrage d'une sortie du type "Garde l'appli ouverte pendant ta sortie pour un suivi précis."
+
+1. Enregistrement d'une sortie
+Ajoute un écran "Démarrer une sortie" (accessible uniquement connecté) avec :
+
+Bouton Démarrer : lance le suivi GPS (via l'API de géolocalisation du navigateur, en mode suivi continu)
+Pendant la sortie : affichage en direct de la distance parcourue, la durée écoulée, la vitesse actuelle et la vitesse moyenne
+Bouton Pause et Terminer
+À la fin : écran récapitulatif avec distance totale, durée, vitesse moyenne, vitesse max, et le tracé parcouru affiché sur une petite carte
+Propose ensuite de générer la carte de stats partageable (fonctionnalité déjà existante) à partir de ces vraies données
+2. Stockage en base (Supabase)
+Crée une table rides (ou équivalent) avec RLS activé : user_id, date, distance_km, durée, vitesse_moyenne, vitesse_max, et le tracé (liste de points GPS ou une version simplifiée). Un utilisateur ne peut lire/modifier que ses propres sorties (les agrégats pour le classement peuvent être publics en lecture, mais pas le détail du tracé des autres).
+
+3. Classement basé sur les vraies données
+Remplace les calculs actuels du classement (widget "Chaque kilomètre compte" et la carte "#1 ce mois-ci" du hero) par de vraies requêtes qui additionnent les distance_km des sorties de chaque utilisateur pour le mois en cours. Tant qu'il n'y a pas encore assez d'utilisateurs réels avec des sorties enregistrées, garde les profils de démo actuels (Le Grimpeur, Enduromax, etc.) mêlés aux vrais utilisateurs pour que le classement ne soit pas vide au lancement.

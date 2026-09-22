@@ -164,8 +164,10 @@ export function ActivityModal() {
        elevation_m: elevation,
        activity_date: date,
        duration_seconds: duration_m * 60,
+       average_speed_kmh: Number((distance / (duration_m / 60)).toFixed(1)),
        max_speed_kmh,
-       discipline
+       discipline,
+       source: 'manual'
     };
     
     const { data, error } = await supabase.from('ride_activities').insert(activityData).select().single();
@@ -175,7 +177,7 @@ export function ActivityModal() {
        setNotice("Impossible d'ajouter la sortie.");
        console.error(error);
     } else {
-       setNotice("Sortie ajoutée au classement !");
+       setNotice("Sortie manuelle enregistrée. Seules les sorties GPS comptent au classement.");
        setActivityOpen(false);
        refreshData();
        // Open share card with the newly created activity
@@ -192,7 +194,7 @@ export function ActivityModal() {
         <button className="modal-close" onClick={() => setActivityOpen(false)}><X size={24} /></button>
         <div className="eyebrow mb-2">Nouvelle trace</div>
         <h2 className="drop-shadow-[0_0_15px_rgba(255,91,26,0.3)]">Ajouter une sortie</h2>
-        <p className="text-lg text-zinc-400 font-medium mb-8">Les kilomètres réels font grimper ton rang. Sois honnête avec toi-même.</p>
+        <p className="text-lg text-zinc-400 font-medium mb-8">Ajoute une sortie à ton historique. Pour garantir un classement fiable, seules les sorties enregistrées par GPS comptent dans ton rang.</p>
         <form className="modal-form" onSubmit={handleSubmit}>
           <label>Date de la sortie
             <input name="date" type="date" required defaultValue={new Date().toISOString().split('T')[0]} max={new Date().toISOString().split('T')[0]} />
@@ -281,7 +283,7 @@ export function ReviewModal() {
 }
 
 export function ShareCardModal() {
-   const { shareOpen, setShareOpen, latestActivity, activities, session } = useBikeRank();
+   const { shareOpen, setShareOpen, latestActivity, activities, session, rankedProfiles } = useBikeRank();
    
    if (!shareOpen) return null;
 
@@ -311,10 +313,8 @@ export function ShareCardModal() {
    
    // Parse format matching the exact mockup
    const timeStr = formatTime(activityToShow.duration_seconds || 0);
-   const categoryActivities = activities
-      .filter((activity) => activity.discipline === activityToShow.discipline)
-      .sort((a, b) => Number(b.max_speed_kmh || 0) - Number(a.max_speed_kmh || 0));
-   const rankNumber = Math.max(1, categoryActivities.findIndex((activity) => activity.id === activityToShow.id) + 1);
+    const monthlyRank = rankedProfiles.find((item) => item.id === session?.user?.id);
+    const rankNumber = monthlyRank?.rank ?? '—';
 
    const createStatsFile = () => {
       const distance = String(activityToShow.distance_km).replace('.', ',');
@@ -337,8 +337,8 @@ export function ShareCardModal() {
           <rect x="120" y="650" width="840" height="360" rx="54" fill="#090604" stroke="#ff5b1a" stroke-width="5"/>
           <text x="540" y="750" font-size="34" font-weight="800" letter-spacing="8" fill="#ff5b1a">VITESSE MAXIMALE</text>
           <text x="540" y="920" font-size="170" font-weight="900" fill="#fff">${speed}<tspan font-size="80" fill="#ff5b1a"> km/h</tspan></text>
-          <text x="540" y="1210" font-size="145" font-weight="900" font-style="italic" fill="#ff5b1a">${rankNumber}e</text>
-          <text x="540" y="1290" font-size="42" font-weight="800" letter-spacing="11" fill="#ff5b1a">PLUS RAPIDE EN ${discipline.toUpperCase()}</text>
+           <text x="540" y="1210" font-size="145" font-weight="900" font-style="italic" fill="#ff5b1a">#${rankNumber}</text>
+           <text x="540" y="1290" font-size="42" font-weight="800" letter-spacing="11" fill="#ff5b1a">CLASSEMENT MENSUEL · ${discipline.toUpperCase()}</text>
         </g>
         <path d="M75 1690 C170 1640 225 1560 320 1585 S455 1450 555 1515 S715 1600 790 1580 S920 1695 1005 1655" fill="none" stroke="#ff5b1a" stroke-width="9" stroke-linecap="round" filter="url(#lineGlow)"/>
         <circle cx="75" cy="1690" r="17" fill="#ffffff"/><circle cx="1005" cy="1655" r="17" fill="#ffffff"/>
@@ -427,11 +427,11 @@ export function ShareCardModal() {
                   <div className="flex items-center justify-center gap-6 w-full">
                      <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#ff5b1a]/50"></div>
                      <Trophy className="text-[#ff5b1a] w-12 h-12 drop-shadow-[0_0_10px_rgba(255,91,26,0.5)]" strokeWidth={2} />
-                     <div className="text-[64px] leading-none font-bold text-[#ff5b1a] drop-shadow-[0_0_15px_rgba(255,91,26,0.4)]">{rankNumber}e</div>
+                      <div className="text-[64px] leading-none font-bold text-[#ff5b1a] drop-shadow-[0_0_15px_rgba(255,91,26,0.4)]">#{rankNumber}</div>
                      <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#ff5b1a]/50"></div>
                   </div>
                   <div className="text-[#ff5b1a] text-lg font-bold tracking-[0.2em] uppercase mt-4 text-center w-full">
-                     Plus rapide en {activityToShow.discipline?.toLowerCase() || 'enduro'}
+                      Classement mensuel · {activityToShow.discipline?.toLowerCase() || 'enduro'}
                   </div>
                </div>
 
