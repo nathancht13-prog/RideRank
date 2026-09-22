@@ -1,0 +1,41 @@
+1. Alternance précise des fonds de section (corrige le rythme noir/blanc)
+Applique exactement cette alternance, section par section, du haut vers le bas de la page :
+
+Hero → reste sombre (photo assombrie, comme actuellement)
+"Tes stats prêtes à partager" → reste blanc/clair (déjà bon, ne pas toucher)
+"Chaque kilomètre compte" (Classement) → passer en fond sombre/noir (actuellement blanc, c'est le problème : deux sections claires se suivaient)
+"Ta prochaine sortie peut tout changer" (Progression) → passer en fond blanc/clair (actuellement noir)
+FAQ ("Questions fréquentes") → fond sombre/noir
+Footer tout en bas (navigation, légal, copyright) → reste sombre/noir, ne pas toucher
+Résultat attendu : sombre → clair → sombre → clair → sombre → sombre (footer), donc une vraie alternance au lieu de deux sections blanches qui se suivent.
+
+Pour les sections qui passent en fond clair : pas de blanc 100% plat — utilise une photo VTT en fond avec un voile blanc semi-transparent par-dessus (environ 50% photo visible / 50% voile blanc), pour que ce soit doux à l'œil tout en gardant le texte bien lisible. Ajoute aussi un léger dégradé de transition aux frontières entre sections claires et sombres (fondu progressif, pas de ligne nette).
+
+2. Photos : uniquement là où il n'y en a pas déjà
+Là où une section a déjà une photo, ne la remplace pas, ne l'inverse pas, ne la change pas — garde-la telle quelle.
+Ajoute une photo uniquement dans les sections qui n'en ont pas encore (en tenant compte du point 1 ci-dessus pour les sections qui passent en fond clair).
+Exceptions : n'ajoute aucune photo dans la section FAQ, ni dans le footer tout en bas (navigation, légal, etc.) — ces deux-là restent en fond uni sombre, sans photo.
+Je vais envoyer les nouvelles photos une par une dans le chat, avec l'emplacement exact pour chacune. Chaque photo ne doit être utilisée qu'à un seul endroit, jamais répétée.
+3. Refonte du header et de la navigation
+Supprime le bouton "S'inscrire / Se connecter" qui est actuellement affiché à côté du menu ☰ dans le header.
+Le header ne doit garder que : le logo à gauche, et le menu ☰ (trois petits traits) à droite — rien d'autre entre les deux.
+Dans le menu qui s'ouvre au clic sur ☰ : remplace l'entrée "Rejoindre" par "S'inscrire / Se connecter" (qui déclenche la connexion/inscription, comme le faisait le bouton supprimé).
+Complète la liste de navigation dans ce menu pour qu'elle reflète bien toutes les sections présentes sur la landing page dans l'ordre où elles apparaissent (Accueil, Tes stats prêtes à partager, Pas d'idée / Trouver ta trace, Spots, Carte, Classement, Progression, FAQ, etc.) — vérifie qu'aucune section existante n'est oubliée dans ce menu.
+Supprime le bloc "Suivez-nous" (Instagram, etc.) du footer tout en bas de la page.
+4. Mockup téléphone : le rapprocher de mymotorank.com
+Le hero (et les autres sections avec un mockup téléphone : "Pas d'idée ?", "Chaque kilomètre compte") doivent se rapprocher du rendu de mymotorank.com sur ces points précis :
+
+a) Un vrai mockup de smartphone réaliste, avec un vrai écran d'appli à l'intérieur
+Actuellement le téléphone est un contour plat/translucide qui laisse juste voir la photo de fond à travers. Remplace-le par un mockup de smartphone réaliste :
+
+Cadre du téléphone visible (bords arrondis, encoche/dynamic island en haut, barre d'accueil en bas, légère réflexion/brillance sur le cadre pour un effet 3D léger)
+À l'intérieur de l'écran, affiche une vraie fausse capture d'écran de l'app Bike Rank (pas la photo de fond qui transparaît) : une barre de statut en haut, un écran "Ma sortie" avec quelques stats (distance, durée, vitesse), éventuellement une mini-carte ou un mini-graphique, et une barre de navigation avec des icônes en bas d'écran — comme un vrai écran d'application, pas un fond transparent.
+b) Cartes glassmorphism flottantes : plus dynamiques et plus travaillées
+Actuellement les cartes (Vitesse Max, Rang Local, Ma Sortie) sont empilées verticalement, alignées, avec juste du texte. Change pour :
+
+Une icône ou petit visuel distinct sur chaque carte (pas juste du texte)
+Disposition éclatée autour du téléphone : les cartes ne doivent pas être alignées en colonne, mais réparties (une en haut à gauche, une en bas à droite, etc.), à des tailles légèrement différentes
+Légère rotation/inclinaison sur chaque carte (quelques degrés, pas toutes dans le même sens), pour un effet "collage dynamique" plutôt que rangé
+Effet de profondeur : certaines cartes doivent apparaître légèrement devant le téléphone (le chevauchent un peu), d'autres derrière, avec des ombres portées cohérentes pour renforcer la sensation de profondeur
+Glow plus marqué : bordure lumineuse plus intense/visible autour de chaque carte, comme un halo néon doux, pas juste un léger liseré
+Applique ce même traitement (téléphone réaliste + cartes dynamiques) à tous les mockups téléphone du site, pas seulement celui du hero.

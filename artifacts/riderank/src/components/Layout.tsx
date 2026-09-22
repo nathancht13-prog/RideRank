@@ -44,13 +44,7 @@ export function Header() {
           <img src="/brand/bike-rank-logo-transparent.png" alt="Bike Rank" className="h-8 md:h-10 object-contain drop-shadow-md" />
         </Link>
 
-        <div className="flex items-center gap-4 relative" ref={menuRef}>
-          {!session && (
-              <button onClick={() => requireAuth('login')} className="button-primary py-2.5 px-4 md:px-6 text-xs md:text-sm">
-                 <span className="md:hidden">Connexion</span>
-                 <span className="hidden md:inline">S'inscrire / Se connecter</span>
-             </button>
-          )}
+        <div className="flex items-center relative" ref={menuRef}>
           <button
             className="w-12 h-12 rounded-full glass-glow flex items-center justify-center text-white hover:text-primary transition-colors hover:scale-105 active:scale-95"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -63,7 +57,9 @@ export function Header() {
             <div className="absolute top-full right-0 mt-4 w-[280px] glass-glow rounded-2xl p-3 flex flex-col shadow-2xl">
               <div className="px-4 py-3 text-xs font-bold text-primary uppercase tracking-widest border-b border-white/10 mb-1">Navigation</div>
               <NavLink href="#accueil">Accueil</NavLink>
+               <NavLink href="#partage">Tes stats prêtes à partager</NavLink>
               <NavLink href="#classement">Classement</NavLink>
+               <NavLink href="#progression">Progression</NavLink>
               <NavLink href="#faq">FAQ</NavLink>
 
               <div className="px-4 py-3 text-xs font-bold text-primary uppercase tracking-widest border-b border-white/10 mt-2 mb-1">Compte</div>
@@ -80,7 +76,7 @@ export function Header() {
                 </>
               ) : (
                 <div className="p-2">
-                   <button onClick={() => { requireAuth('signup'); setMenuOpen(false); }} className="button-primary py-4 w-full text-lg">Rejoindre</button>
+                   <button onClick={() => { requireAuth('signup'); setMenuOpen(false); }} className="button-primary py-4 w-full text-base">S'inscrire / Se connecter</button>
                 </div>
               )}
             </div>
@@ -108,8 +104,8 @@ export function Footer() {
   return (
     <footer className="py-16 bg-black text-zinc-500 border-t border-white/5 relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
-      <div className="container grid md:grid-cols-4 gap-12 mb-16 relative z-10">
-        <div className="md:col-span-1">
+      <div className="container grid md:grid-cols-3 gap-12 mb-16 relative z-10">
+        <div>
           <Link href="/" className="flex items-center mb-6 hover:opacity-80 transition-opacity">
             <img src="/brand/bike-rank-logo-transparent.png" alt="Bike Rank" className="h-10 object-contain drop-shadow-md" />
           </Link>
@@ -119,7 +115,9 @@ export function Footer() {
           <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-sm">Navigation</h4>
           <ul className="space-y-3 text-lg font-medium">
             <li><FooterLink href="#accueil">Accueil</FooterLink></li>
+             <li><FooterLink href="#partage">Tes stats</FooterLink></li>
             <li><FooterLink href="#classement">Classement</FooterLink></li>
+             <li><FooterLink href="#progression">Progression</FooterLink></li>
             <li><FooterLink href="#faq">Questions fréquentes</FooterLink></li>
           </ul>
         </div>
@@ -130,12 +128,6 @@ export function Footer() {
             <li><FooterLink href="/legal#confidentialite">Confidentialité & Cookies</FooterLink></li>
             <li><FooterLink href="/legal#cgu">Conditions d'utilisation</FooterLink></li>
             <li><FooterLink href="/legal#contact">Contact</FooterLink></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-sm">Suivez-nous</h4>
-          <ul className="space-y-3 text-lg font-medium">
-            <li><a href="#" className="hover:text-primary transition-colors">Instagram</a></li>
           </ul>
         </div>
       </div>

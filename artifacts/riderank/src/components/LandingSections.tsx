@@ -47,34 +47,48 @@ export function Hero() {
         </div>
         
           <div className="relative animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 flex justify-center perspective-1000 z-10 mt-20 md:mt-28 py-8">
-            <div className="relative w-[250px] h-[500px] lg:w-[320px] lg:h-[640px] glass-glow-strong rounded-[42px] lg:rounded-[48px] p-2 flex flex-col items-center justify-center lg:transform lg:rotate-y-[-15deg] lg:rotate-x-[5deg] hover:rotate-0 transition-transform duration-700">
-              <div className="w-full h-full rounded-[40px] overflow-hidden relative bg-black">
+            <div className="relative w-[250px] h-[500px] lg:w-[320px] lg:h-[640px] rounded-[46px] lg:rounded-[54px] p-[7px] flex flex-col items-center justify-center bg-gradient-to-br from-zinc-400 via-zinc-950 to-zinc-500 shadow-[0_36px_90px_rgba(0,0,0,0.8),0_0_45px_rgba(255,91,26,0.3)] lg:transform lg:rotate-y-[-15deg] lg:rotate-x-[5deg] hover:rotate-0 transition-transform duration-700">
+              <div className="w-full h-full rounded-[40px] lg:rounded-[47px] overflow-hidden relative bg-black border border-white/10 shadow-[inset_0_0_22px_rgba(255,255,255,0.08)]">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,91,26,0.3),transparent_32%),linear-gradient(160deg,#180803_0%,#000_55%,#120501_100%)]"></div>
-                  <div className="absolute inset-x-6 top-24 bottom-48 rounded-[28px] border border-primary/20 bg-[linear-gradient(135deg,transparent_10%,rgba(255,91,26,0.08)_50%,transparent_90%)] shadow-[inset_0_0_40px_rgba(255,91,26,0.08)]"></div>
-                 <div className="absolute top-0 w-32 h-6 bg-black rounded-b-3xl left-1/2 -translate-x-1/2 z-10"></div>
-                 <div className="absolute bottom-8 left-0 right-0 px-6">
-                    <div className="w-full bg-zinc-900/80 backdrop-blur-md rounded-2xl p-4 border border-white/10">
-                       <div className="flex justify-between items-center mb-2">
-                          <span className="text-zinc-400 text-xs font-bold uppercase tracking-widest">Ma Sortie</span>
-                          <span className="text-primary text-xs font-bold">14:02 - 16:30</span>
-                       </div>
-                       <div className="h-24 w-full rounded-xl bg-zinc-950 border border-white/5 relative overflow-hidden flex items-center justify-center">
-                          <svg viewBox="0 0 100 40" preserveAspectRatio="none" className="w-full h-full stroke-primary fill-none opacity-80" strokeWidth="2">
-                             <path d="M 0 30 Q 20 20 40 35 T 60 10 T 80 25 T 100 5"/>
-                          </svg>
+                  <div className="absolute inset-x-4 top-3 flex justify-between text-[9px] font-bold text-white/80 z-10"><span>09:41</span><span>5G&nbsp;&nbsp;●</span></div>
+                  <div className="absolute top-2 w-24 lg:w-28 h-7 bg-black rounded-full left-1/2 -translate-x-1/2 z-20 border border-white/5"></div>
+                  <div className="absolute inset-x-5 top-16">
+                     <div className="text-primary text-[10px] font-bold uppercase tracking-[0.25em] mb-2">Bike Rank</div>
+                     <div className="text-white text-3xl lg:text-4xl font-bold uppercase">Ma sortie</div>
+                     <div className="text-zinc-500 text-xs mt-1">Aujourd'hui · Massif des Alpes</div>
+                     <div className="grid grid-cols-3 gap-2 mt-6">
+                       {[['24,6','KM'], ['1:42','TEMPS'], ['42','KM/H']].map(([value,label]) => (
+                         <div key={label} className="rounded-xl border border-white/10 bg-white/5 p-2 text-center">
+                           <div className="text-white text-lg lg:text-xl font-bold">{value}</div>
+                           <div className="text-primary text-[8px] font-bold">{label}</div>
+                         </div>
+                       ))}
+                     </div>
+                     <div className="mt-4 h-36 lg:h-52 rounded-2xl border border-primary/20 bg-black/70 p-4 relative overflow-hidden">
+                       <div className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(255,91,26,.25)_1px,transparent_1px),linear-gradient(90deg,rgba(255,91,26,.25)_1px,transparent_1px)] bg-[size:22px_22px]"></div>
+                       <svg viewBox="0 0 100 50" preserveAspectRatio="none" className="relative w-full h-full stroke-primary fill-none drop-shadow-[0_0_6px_rgba(255,91,26,1)]" strokeWidth="2">
+                         <path d="M3 40 C18 35 20 10 38 17 S55 45 67 30 S83 12 97 7"/>
+                       </svg>
+                     </div>
+                  </div>
+                  <div className="absolute bottom-7 left-4 right-4">
+                     <div className="w-full bg-zinc-900/90 backdrop-blur-md rounded-2xl p-3 border border-white/10">
+                        <div className="flex justify-around text-[9px] font-bold uppercase text-zinc-500">
+                           <span className="text-primary">Sortie</span><span>Stats</span><span>Rang</span>
                        </div>
                     </div>
                  </div>
+                  <div className="absolute bottom-2 w-24 h-1 bg-white/70 rounded-full left-1/2 -translate-x-1/2"></div>
               </div>
               
               {/* Floating Glass Card 1 */}
-               <div className="absolute top-16 lg:top-20 left-[-28px] lg:left-[-40px] w-48 lg:w-64 p-4 lg:p-6 glass-glow">
+                <div className="absolute top-16 lg:top-20 left-[-42px] lg:left-[-90px] w-48 lg:w-64 p-4 lg:p-6 glass-glow transform -rotate-6 z-30 shadow-[0_20px_50px_rgba(0,0,0,.65),0_0_30px_rgba(255,91,26,.38)]">
                 <div className="flex items-center gap-3 text-primary text-sm font-bold uppercase tracking-widest mb-2"><Trophy size={18} /> Vitesse Max</div>
                  <div className="text-5xl lg:text-7xl font-bold text-white drop-shadow-lg leading-none">42 <span className="text-2xl lg:text-3xl text-zinc-400">km/h</span></div>
               </div>
 
               {/* Floating Glass Card 2 */}
-               <div className="absolute bottom-32 lg:bottom-40 right-[-24px] lg:right-[-30px] w-44 lg:w-56 p-4 lg:p-6 glass-glow">
+                <div className="absolute bottom-28 lg:bottom-36 right-[-35px] lg:right-[-85px] w-44 lg:w-56 p-4 lg:p-6 glass-glow transform rotate-7 z-30 shadow-[0_20px_50px_rgba(0,0,0,.65),0_0_30px_rgba(255,91,26,.38)]">
                 <div className="flex items-center gap-3 text-primary text-sm font-bold uppercase tracking-widest mb-2"><Star size={18} /> Rang Local</div>
                  <div className="text-6xl lg:text-8xl font-bold text-white drop-shadow-lg leading-none">#4</div>
               </div>
@@ -287,15 +301,20 @@ export function MapSection() {
 export function LeaderboardSection() {
    const { profile } = useBikeRank();
    return (
-       <section className="py-32 bg-white text-black relative overflow-hidden" id="classement">
-         <div className="container grid lg:grid-cols-2 gap-16 items-center">
+       <section className="py-32 bg-black text-white relative overflow-hidden" id="classement">
+          <div className="absolute inset-0">
+             <img src="/images/leaderboard-forest-riders.jpg" alt="" className="w-full h-full object-cover opacity-20" />
+             <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black"></div>
+          </div>
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white to-transparent opacity-10"></div>
+          <div className="container relative z-10 grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative z-10">
                <div className="eyebrow mb-6 tracking-widest">Classement</div>
                <h2 className="text-6xl md:text-8xl lg:text-9xl font-bold uppercase leading-[0.85] tracking-tight mb-8">Chaque<br/>Kilomètre<br/><span className="text-primary">Compte.</span></h2>
-               <p className="text-zinc-600 text-xl font-medium mb-12 max-w-md leading-relaxed">Les kilomètres réellement roulés te font avancer. Suis ta position en France, dans ta région ou entre amis.</p>
+                <p className="text-zinc-300 text-xl font-medium mb-12 max-w-md leading-relaxed">Les kilomètres réellement roulés te font avancer. Suis ta position en France, dans ta région ou entre amis.</p>
 
                <div className="mt-12 hidden lg:block">
-                   <div className="text-black/55 text-sm font-bold uppercase tracking-widest mb-2">Septembre 2026</div>
+                    <div className="text-white/55 text-sm font-bold uppercase tracking-widest mb-2">Septembre 2026</div>
                   <div className="flex items-end gap-6">
                      <div className="text-8xl font-bold text-primary leading-none">#2</div>
                      <div className="pb-2">
@@ -390,27 +409,29 @@ export function LeaderboardSection() {
 export function Progression() {
    const { requireAuth } = useBikeRank();
    return (
-       <section className="py-32 bg-zinc-950 text-white relative border-t border-white/5 overflow-hidden" id="progression">
+       <section className="py-32 bg-white text-black relative overflow-hidden" id="progression">
          <div className="absolute inset-0 z-0">
-           <img src="/images/pexels-simeon-theartist-18761634_1790084330601.jpg" alt="Progression Background" className="w-full h-full object-cover opacity-30 mix-blend-luminosity" />
-           <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-zinc-950"></div>
+            <img src="/images/pexels-simeon-theartist-18761634_1790084330601.jpg" alt="Progression Background" className="w-full h-full object-cover opacity-50" />
+            <div className="absolute inset-0 bg-white/55"></div>
+            <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/70 to-transparent"></div>
+            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-black/70"></div>
          </div>
 
          <div className="container relative z-10 flex flex-col items-center text-center">
             <div className="max-w-4xl mx-auto mb-16">
                <h2 className="text-6xl md:text-8xl font-bold uppercase leading-[0.85] tracking-tight mb-8">Ta prochaine sortie<br/>peut tout<br/><span className="text-primary drop-shadow-[0_0_15px_rgba(255,91,26,0.3)]">Changer.</span></h2>
-               <p className="text-zinc-400 text-xl font-medium max-w-2xl mx-auto leading-relaxed">Quelques kilomètres peuvent suffire pour gagner des places, battre un objectif ou débloquer une nouvelle étape.</p>
+                <p className="text-zinc-800 text-xl font-medium max-w-2xl mx-auto leading-relaxed">Quelques kilomètres peuvent suffire pour gagner des places, battre un objectif ou débloquer une nouvelle étape.</p>
             </div>
 
-            <div className="glass-glow w-full max-w-2xl rounded-[32px] p-8 md:p-12 text-left mb-12">
+             <div className="glass-glow-light w-full max-w-2xl rounded-[32px] p-8 md:p-12 text-left mb-12">
                <div className="flex justify-between items-center mb-10">
                   <span className="text-primary text-xs font-bold uppercase tracking-widest">Exemple de progression</span>
-                  <span className="text-zinc-500 text-xs font-bold uppercase tracking-widest border border-white/10 px-3 py-1 rounded-full">Illustration</span>
+                   <span className="text-zinc-700 text-xs font-bold uppercase tracking-widest border border-black/10 px-3 py-1 rounded-full">Illustration</span>
                </div>
 
                <div className="flex items-center gap-6 mb-12">
-                  <div className="text-6xl md:text-8xl font-bold text-zinc-500">#14</div>
-                  <ArrowRight className="text-zinc-600 w-8 h-8" />
+                   <div className="text-6xl md:text-8xl font-bold text-zinc-500">#14</div>
+                   <ArrowRight className="text-zinc-600 w-8 h-8" />
                   <div className="text-7xl md:text-9xl font-bold text-primary drop-shadow-[0_0_15px_rgba(255,91,26,0.3)]">#9</div>
                   <div className="ml-auto glass-glow-strong border-primary text-primary px-4 py-2 rounded-xl font-bold uppercase tracking-widest text-sm hidden sm:block">
                      +5 Places
@@ -419,13 +440,13 @@ export function Progression() {
 
                <div className="space-y-4">
                   <div className="flex justify-between text-sm font-bold uppercase tracking-widest">
-                     <span className="text-zinc-400">Objectif suivant</span>
-                     <span className="text-white">10 km</span>
+                      <span className="text-zinc-700">Objectif suivant</span>
+                      <span className="text-black">10 km</span>
                   </div>
-                  <div className="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
+                   <div className="w-full h-2 bg-zinc-300 rounded-full overflow-hidden">
                      <div className="h-full bg-primary w-[65%] rounded-full shadow-[0_0_10px_rgba(255,91,26,0.8)]"></div>
                   </div>
-                  <div className="text-zinc-500 text-sm font-bold">
+                   <div className="text-zinc-700 text-sm font-bold">
                      Plus que 3,5 km pour atteindre le #8
                   </div>
                </div>
@@ -450,7 +471,7 @@ export function FAQSection() {
    ];
 
    return (
-      <section className="py-32 bg-white text-black relative" id="faq">
+       <section className="py-32 bg-black text-white relative" id="faq">
          <div className="container max-w-4xl relative z-10">
             <div className="text-center mb-16">
                <div className="eyebrow mb-4">Questions fréquentes</div>
