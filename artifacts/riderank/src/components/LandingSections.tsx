@@ -23,9 +23,12 @@ export function Hero() {
               <span className="text-primary drop-shadow-[0_0_15px_rgba(255,91,26,0.3)]">Progresse.</span><br/>
               <span className="whitespace-nowrap">Monte en places.</span>
            </h1>
-           <p className="text-lg md:text-2xl text-zinc-300 max-w-2xl mb-8 leading-relaxed font-medium">
+           <p className="text-lg md:text-2xl text-zinc-300 max-w-2xl mb-4 leading-relaxed font-medium">
               Chaque kilomètre te fait progresser. Enregistre tes sorties à vélo, découvre tes stats et grimpe au classement.
            </p>
+           <div className="flex items-center gap-2 text-primary text-xs sm:text-sm font-bold uppercase tracking-widest mb-8">
+              <Mountain size={16} /> Toute l'année, pas juste l'été
+           </div>
 
            {/* Teaser Leaderboard Widget */}
            <div className="glass-glow mb-10 px-6 py-4 flex items-center gap-6 rounded-2xl">
@@ -486,6 +489,7 @@ export function FAQSection() {
        { q: "Mes statistiques sont-elles publiques ?", a: "Ton pseudo, ton rang et ton kilométrage mensuel apparaissent dans le classement. Les données de sortie utilisées pour ces totaux restent limitées à la distance, au dénivelé et à la date." },
       { q: "Comment sont validés les kilomètres ?", a: "Pour l'instant, c'est basé sur la confiance. Ajoute tes sorties manuellement après ton run. Les tricheurs se mentent à eux-mêmes." },
       { q: "Bike Rank fonctionne-t-il avec tout type de VTT ?", a: "Enduro, DH, XC, e-VTT... Toutes les montures sont acceptées tant que l'esprit freeride est là." },
+      { q: "Ça marche seulement l'été ?", a: "Non. Les bike parks avec remontées mécaniques ferment généralement mi-septembre, mais le classement continue toute l'année : trail, XC, enduro sur sentiers naturels, e-VTT... la meute roule aussi en automne et en hiver." },
        { q: "Dois-je garder l'application ouverte en roulant ?", a: "Non. Enregistre simplement ta sortie une fois rentré : Bike Rank n'a pas besoin de rester ouvert sur le sentier." }
    ];
 
