@@ -313,8 +313,8 @@ export function LeaderboardSection() {
    return (
        <section className="py-32 bg-black text-white relative overflow-hidden" id="classement">
           <div className="absolute inset-0">
-             <img src="/images/leaderboard-forest-riders.jpg" alt="" className="w-full h-full object-cover opacity-20" />
-             <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black"></div>
+             <img src="/images/leaderboard-forest-riders.jpg" alt="" className="w-full h-full object-cover opacity-40 saturate-[.72] contrast-[.92]" />
+             <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/55 to-black/85"></div>
           </div>
           <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white to-transparent opacity-10"></div>
           <div className="container relative z-10 grid lg:grid-cols-2 gap-16 items-center">
