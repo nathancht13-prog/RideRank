@@ -202,6 +202,13 @@ body::before {
 .modal-form .input-with-prefix input:focus { box-shadow: none; }
 .input-prefix { display: grid; place-items: center; padding: 0 20px; background: rgba(255,255,255,0.02); border-right: 1px solid rgba(255,255,255,0.1); color: hsl(var(--muted-foreground)); font-family: var(--app-font-display); font-size: 24px; font-weight: 700; }
 
+.modal-form .input-with-suffix { display: flex; align-items: stretch; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; overflow: hidden; transition: all 0.2s ease; }
+.modal-form .input-with-suffix:focus-within { border-color: rgba(255, 91, 26, 0.6); box-shadow: 0 0 15px rgba(255, 91, 26, 0.2); background: rgba(255, 91, 26, 0.05); }
+.modal-form .input-with-suffix input { border: none; background: transparent; border-radius: 0; margin: 0; flex: 1; min-width: 0; }
+.modal-form .input-with-suffix input:focus { box-shadow: none; }
+.input-suffix-btn { display: grid; place-items: center; padding: 0 20px; background: transparent; border: none; border-left: 1px solid rgba(255,255,255,0.1); color: hsl(var(--muted-foreground)); cursor: pointer; transition: color 0.2s ease; }
+.input-suffix-btn:hover { color: hsl(var(--primary)); }
+
 .form-error { margin: 0; color: #ff5b1a; font-weight: 600; }
 .field-help { color: hsl(var(--muted-foreground)); font-size: 14px; font-weight: 600; letter-spacing: 0; text-transform: none; }
 

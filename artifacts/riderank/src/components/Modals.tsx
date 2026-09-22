@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, MapPin, Timer, Gauge, Trophy, Share2, Download } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useBikeRank } from '../BikeRankContext';
+import { Onboarding } from './Onboarding';
 
 function friendlyAuthError(message: string) {
   const value = message.toLowerCase();
@@ -17,30 +18,25 @@ export function AuthModal() {
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
-  if (!authOpen) return null;
+  if (!authOpen || authMode !== 'login') return null;
 
   const submitAuth = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     const email = String(form.get('email') ?? '').trim();
     const password = String(form.get('password') ?? '');
-    const pseudoRaw = String(form.get('pseudo') ?? '').trim();
-    const pseudo = pseudoRaw.replace(/^@/, '').slice(0, 30);
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setError('Saisis une adresse e-mail valide.');
     if (password.length < 6 || password.length > 8) return setError('Le mot de passe doit contenir entre 6 et 8 caractères.');
-    if (authMode === 'signup' && (pseudo.length < 2 || pseudo.length > 30)) return setError('Le pseudo doit contenir entre 2 et 30 caractères.');
-    
+
     setBusy(true); setError('');
-    const result = authMode === 'signup'
-      ? await supabase.auth.signUp({ email, password, options: { data: { pseudo } } })
-      : await supabase.auth.signInWithPassword({ email, password });
-    
+    const result = await supabase.auth.signInWithPassword({ email, password });
+
     setBusy(false);
     if (result.error) return setError(friendlyAuthError(result.error.message));
-    
+
     setAuthOpen(false);
-    setNotice(authMode === 'signup' && !result.data.session ? 'Compte créé. Consulte ton e-mail pour confirmer.' : 'Bienvenue dans la meute.');
+    setNotice('Bienvenue dans la meute.');
   };
 
   return (
@@ -48,22 +44,9 @@ export function AuthModal() {
       <section className="app-modal" role="dialog" aria-modal="true" onMouseDown={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={() => setAuthOpen(false)}><X size={24} /></button>
         <div className="eyebrow mb-2">Entre dans la course</div>
-        <h2 className="drop-shadow-[0_0_15px_rgba(255,91,26,0.3)]">{authMode === 'login' ? 'Connexion' : 'Créer un compte'}</h2>
-        
-        <div className="auth-tabs">
-          <button className={authMode === 'login' ? 'active' : ''} onClick={() => { setAuthMode('login'); setError(''); }}>Connexion</button>
-          <button className={authMode === 'signup' ? 'active' : ''} onClick={() => { setAuthMode('signup'); setError(''); }}>Inscription</button>
-        </div>
-        
+        <h2 className="drop-shadow-[0_0_15px_rgba(255,91,26,0.3)]">Connexion</h2>
+
         <form className="modal-form" onSubmit={submitAuth}>
-          {authMode === 'signup' && (
-            <label>Pseudo
-              <div className="input-with-prefix">
-                <span className="input-prefix">@</span>
-                <input name="pseudo" minLength={2} maxLength={30} required placeholder="rider73" />
-              </div>
-            </label>
-          )}
           <label>E-mail
             <input name="email" type="email" required placeholder="toi@exemple.com" />
           </label>
@@ -73,9 +56,13 @@ export function AuthModal() {
           </label>
           {error && <p className="form-error text-lg">{error}</p>}
           <button className="button-primary w-full py-4 text-xl" disabled={busy} data-testid="submit-auth">
-            {busy ? 'Patiente…' : authMode === 'login' ? 'Se connecter' : 'Créer mon profil'}
+            {busy ? 'Patiente…' : 'Se connecter'}
           </button>
         </form>
+        <p className="text-zinc-500 text-sm mt-6 text-center">
+          Pas encore de compte ?{' '}
+          <button className="text-primary underline font-semibold" onClick={() => { setAuthMode('signup'); setError(''); }}>Rejoindre la meute</button>
+        </p>
       </section>
     </div>
   );
@@ -451,9 +438,11 @@ export function ShareCardModal() {
 }
 
 export function Modals() {
+  const { authOpen, authMode } = useBikeRank();
   return (
     <>
       <AuthModal />
+      {authOpen && authMode === 'signup' && <Onboarding />}
       <ProfileModal />
       <ActivityModal />
       <ReviewModal />
