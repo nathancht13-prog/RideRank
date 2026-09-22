@@ -341,7 +341,7 @@ export function ShareCardModal() {
           <text x="540" y="1290" font-size="42" font-weight="800" letter-spacing="11" fill="#ff5b1a">PLUS RAPIDE EN ${discipline.toUpperCase()}</text>
         </g>
         <path d="M75 1690 C170 1640 225 1560 320 1585 S455 1450 555 1515 S715 1600 790 1580 S920 1695 1005 1655" fill="none" stroke="#ff5b1a" stroke-width="9" stroke-linecap="round" filter="url(#lineGlow)"/>
-        <circle cx="75" cy="1690" r="17" fill="#ffcc00"/><circle cx="1005" cy="1655" r="17" fill="#ffcc00"/>
+        <circle cx="75" cy="1690" r="17" fill="#ffffff"/><circle cx="1005" cy="1655" r="17" fill="#ffffff"/>
       </svg>`;
       return new File([new Blob([svg], { type: 'image/svg+xml' })], `bike-rank-${activityToShow.id}.svg`, { type: 'image/svg+xml' });
    };
@@ -438,8 +438,8 @@ export function ShareCardModal() {
                <div className="mt-auto absolute bottom-0 left-0 w-full h-[140px] pointer-events-none z-0">
                   <svg viewBox="0 0 100 40" preserveAspectRatio="none" className="w-full h-full drop-shadow-[0_0_12px_rgba(255,91,26,0.9)] overflow-visible">
                      <path d="M 5 35 Q 15 25 25 18 T 45 6 T 60 18 T 80 30 L 95 35" fill="none" stroke="#ff5b1a" strokeWidth="1.2" strokeLinecap="round" />
-                     <circle cx="5" cy="35" r="2" fill="#ffcc00" />
-                     <circle cx="95" cy="35" r="2" fill="#ffcc00" />
+                     <circle cx="5" cy="35" r="2" fill="#ffffff" />
+                     <circle cx="95" cy="35" r="2" fill="#ffffff" />
                   </svg>
                </div>
             </div>

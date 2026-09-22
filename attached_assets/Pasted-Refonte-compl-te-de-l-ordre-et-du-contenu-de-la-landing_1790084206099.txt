@@ -1,0 +1,72 @@
+Refonte complète de l'ordre et du contenu de la landing page, pour reproduire fidèlement la mécanique de mymotorank.com (structure, widgets, glassmorphism) adaptée à Bike Rank (VTT). Je fournirai le logo et des photos séparément dans le chat — prépare le site pour les recevoir facilement.
+
+Règles transversales (à respecter partout)
+Couleurs strictement noir / orange / blanc. Retire tout jaune et tout gris qui aurait pu s'infiltrer quelque part sur le site — uniquement ces 3 couleurs.
+Glassmorphism réel sur tous les widgets/cartes flottantes décrits ci-dessous : fond semi-transparent flouté (backdrop-filter: blur), bordure fine lumineuse orange, halo léger — pas des blocs pleins.
+Logo : je vais envoyer une image du logo "Bike Rank" dans le chat — intègre-la dans le header à la place du logo actuel dès que je te l'envoie.
+Photos : je vais fournir des photos une par une (ex : une photo de vélo qui saute, une photo avec deux riders, etc.). Chaque photo ne doit être utilisée qu'une seule fois sur tout le site, jamais répétée à deux endroits. Alterne les sections avec photo colorée en fond et les sections à fond clair/épuré (façon studio blanc), comme sur mymotorank.com : colorée → claire → colorée → claire, etc., tout du long de la page. Pour l'instant, prépare des emplacements clairs (placeholders) pour ces photos, je les enverrai au fur et à mesure.
+Boutons de connexion : les 3 boutons suivants doivent tous rediriger vers la page/modale de connexion-inscription : le bouton "S'inscrire / Se connecter" en haut à droite du header, le bouton "Entrer dans le classement" du hero, et le bouton "À toi de rouler" en bas de page (section progression). Les autres boutons peuvent ne rien faire pour l'instant, mais ces 3-là doivent être fonctionnels.
+1. Hero (section 1)
+Supprime le petit label "LA MEUTE T'ATTEND" tout en haut du hero.
+Garde le titre "RIDE. PROGRESSE. MONTE EN PLACES." tel quel.
+Juste en dessous, remplace/ajoute ce texte : "Chaque kilomètre te fait progresser, enregistre tes sorties à vélo, découvre tes stats et grimpe au classement."
+Entre ce texte et le bouton "Entrer dans le classement", ajoute un petit widget/carte glassmorphism horizontal, façon leaderboard teaser, avec :
+Un badge couronne/#1
+"#1 CE MOIS-CI · SEPTEMBRE"
+Le nom "LE GRIMPEUR" en gros
+"LE RIDER À BATTRE" en sous-texte
+"56 KM" affiché en grand à droite
+Sous ce widget, garde le bouton CTA "ENTRER DANS LE CLASSEMENT" (redirige vers connexion)
+Garde et renforce le mockup téléphone avec les cartes glassmorphism flottantes autour (stats VTT), déjà en place.
+2. "Tes stats prêtes à partager" (section 2 — à repositionner juste après le hero)
+Cette section existe déjà plus bas sur le site mais doit maintenant être la deuxième section, juste après le hero. Contenu :
+
+Petit texte au-dessus du titre : "PARTAGE TES EXPLOITS"
+Titre : "TES STATS PRÊTES À PARTAGER."
+Sous-texte : "Après chaque sortie, génère une carte et partage-la en quelques secondes."
+Affiche en dessous un exemple de carte de stats partageable — j'envoie une image de référence (carte orange/noir/blanc "Bike Rank" avec distance, temps total, vitesse max, classement type "13e plus rapide en enduro", et un petit graphique) — utilise ce visuel comme exemple pour l'instant, j'en enverrai d'autres à ajouter ensuite en rotation.
+3. "Pas d'idée ? Bike Rank prépare ta trace." (section 3)
+C'est la section "Trouver un spot" déjà existante — renomme-la et donne-lui le même traitement visuel que la section équivalente sur mymotorank.com (accroche à gauche + mockup téléphone avec petites cartes glassmorphism flottantes illustrant le fonctionnement, à droite) :
+
+Petit label : "PRÉPARE TA SORTIE"
+Titre : "PAS D'IDÉE ?" / "BIKE RANK PRÉPARE TA TRACE."
+Texte : "Indique ton temps disponible ou choisis ta destination. Bike Rank te prépare une sortie adaptée : une boucle qui te ramène au départ ou un itinéraire vers l'endroit choisi."
+Garde le formulaire existant (niveau/temps disponible) déjà en place, avec le mockup téléphone + petites cartes glassmorphism flottantes autour (comme sur mymotorank.com), illustrant le principe (ex: une carte "Dis-moi combien de temps tu as", une carte "Choisis ta destination").
+4. Garder les sections Spots + Carte
+Les sections "Les spots qui parlent" et "La carte" restent après la section 3, inchangées dans leur contenu, juste conserver leur position dans le flux.
+
+5. "Chaque kilomètre compte." — Classement (section suivante)
+Redesign complet façon mymotorank.com, avec un widget glassmorphism (façon carte/app mobile) :
+
+Titre : "CHAQUE KILOMÈTRE COMPTE."
+Texte : "Les kilomètres réellement roulés te font avancer. Suis ta position en France, dans ta région ou entre amis."
+Widget glassmorphism à afficher à côté (ou dans le mockup téléphone) :
+En-tête : "CLASSEMENT" / "BIKE RANK · FRANCE" avec un badge "ACTIF"
+Un toggle "CE MOIS-CI" / "TOTAL"
+"SEPTEMBRE 2026"
+Bloc "TA POSITION" : "#3", avec le pseudo de l'utilisateur connecté, "61,9 KM CE MOIS-CI", et "Plus que 2,3 km pour passer #2"
+Liste "TOP RIDERS" avec 4 lignes :
+ENDUROMAX — 68,7 km
+TRAILKING — 64,2 km
+(pseudo utilisateur / "TOI") — 61,9 km (mis en avant/surligné)
+ROOTSRIDER — 60,3 km
+Petite note en bas : "Le classement se base uniquement sur les kilomètres validés."
+6. "Ta prochaine sortie peut tout changer." — Progression (section suivante)
+Titre : "TA PROCHAINE SORTIE PEUT TOUT CHANGER."
+Texte : "Quelques kilomètres peuvent suffire pour gagner des places, battre un objectif ou débloquer une nouvelle étape."
+Widget "EXEMPLE DE PROGRESSION" (glassmorphism) :
+"#14 → #9" avec badge "+5 PLACES"
+"Objectif suivant" avec une barre de progression et une valeur en km (choisis une valeur cohérente, ex: 8-10 km)
+"Plus que [X] km pour atteindre le #8"
+Bouton CTA en dessous : "À TOI DE ROULER" avec une flèche — doit être cliquable et rediriger vers la page de connexion/inscription (voir règle transversale plus haut). Si le lien exact n'est pas encore prêt techniquement, fais en sorte qu'il soit au minimum cliquable dès maintenant et pointe vers la connexion.
+7. FAQ
+Section déjà existante, inchangée, garde sa position après la section progression.
+
+8. Pages légales
+Crée les pages/sections suivantes, même avec du contenu placeholder pour l'instant (je compléterai les vraies infos ensuite) :
+
+Mentions légales
+Confidentialité (inclure une mention sur les cookies)
+Conditions d'utilisation
+Contact
+Structure-les simplement avec les rubriques standards habituelles ; je te donnerai les informations précises (nom, contact, etc.) à ajouter une fois que la structure sera en place.

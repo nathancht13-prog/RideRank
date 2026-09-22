@@ -44,7 +44,13 @@ export function Header() {
           <img src="/brand/bike-rank-logo-transparent.png" alt="Bike Rank" className="h-8 md:h-10 object-contain drop-shadow-md" />
         </Link>
 
-        <div className="relative" ref={menuRef}>
+        <div className="flex items-center gap-4 relative" ref={menuRef}>
+          {!session && (
+              <button onClick={() => requireAuth('login')} className="button-primary py-2.5 px-4 md:px-6 text-xs md:text-sm">
+                 <span className="md:hidden">Connexion</span>
+                 <span className="hidden md:inline">S'inscrire / Se connecter</span>
+             </button>
+          )}
           <button
             className="w-12 h-12 rounded-full glass-glow flex items-center justify-center text-white hover:text-primary transition-colors hover:scale-105 active:scale-95"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -58,6 +64,7 @@ export function Header() {
               <div className="px-4 py-3 text-xs font-bold text-primary uppercase tracking-widest border-b border-white/10 mb-1">Navigation</div>
               <NavLink href="#accueil">Accueil</NavLink>
               <NavLink href="#trouver">Trouver un spot</NavLink>
+               <NavLink href="#spots">Spots</NavLink>
               <NavLink href="#carte">Carte</NavLink>
               <NavLink href="#classement">Classement</NavLink>
               <NavLink href="#faq">FAQ</NavLink>
@@ -116,6 +123,7 @@ export function Footer() {
           <ul className="space-y-3 text-lg font-medium">
             <li><FooterLink href="#accueil">Accueil</FooterLink></li>
             <li><FooterLink href="#trouver">Trouver un spot</FooterLink></li>
+             <li><FooterLink href="#spots">Spots</FooterLink></li>
             <li><FooterLink href="#carte">Carte</FooterLink></li>
             <li><FooterLink href="#classement">Classement</FooterLink></li>
             <li><FooterLink href="#faq">Questions fréquentes</FooterLink></li>
@@ -124,9 +132,9 @@ export function Footer() {
         <div>
           <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-sm">Légal</h4>
           <ul className="space-y-3 text-lg font-medium">
-            <li><FooterLink href="/legal">Mentions légales</FooterLink></li>
-            <li><FooterLink href="/legal">Confidentialité</FooterLink></li>
-            <li><FooterLink href="/legal">Conditions d'utilisation</FooterLink></li>
+            <li><FooterLink href="/legal#mentions">Mentions légales</FooterLink></li>
+            <li><FooterLink href="/legal#confidentialite">Confidentialité & Cookies</FooterLink></li>
+            <li><FooterLink href="/legal#cgu">Conditions d'utilisation</FooterLink></li>
             <li><FooterLink href="/legal#contact">Contact</FooterLink></li>
           </ul>
         </div>
