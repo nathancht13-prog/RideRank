@@ -95,39 +95,12 @@ export function ShareStats() {
                <p className="text-zinc-600 text-xl font-medium">Après chaque sortie, génère une carte et partage-la en quelques secondes.</p>
             </div>
 
-            <div className="w-full max-w-sm">
-               <div className="glass-glow-strong bg-black p-7 sm:p-9 text-white transform transition-transform duration-500 hover:-translate-y-2 hover:rotate-1">
-                  <div className="flex items-center justify-between border-b border-white/15 pb-5 mb-7">
-                     <img src="/brand/bike-rank-logo-transparent.png" alt="Bike Rank" className="h-7 object-contain" />
-                     <span className="text-primary text-xs font-bold uppercase tracking-[0.2em]">Ma sortie</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-6 text-center mb-7">
-                     <div>
-                        <div className="text-white/60 text-xs font-bold uppercase tracking-widest mb-2">Distance</div>
-                        <div className="text-5xl font-bold">24,6 <span className="text-lg text-primary">km</span></div>
-                     </div>
-                     <div>
-                        <div className="text-white/60 text-xs font-bold uppercase tracking-widest mb-2">Temps total</div>
-                        <div className="text-5xl font-bold">1h42</div>
-                     </div>
-                  </div>
-                  <div className="rounded-2xl border border-primary/50 bg-primary/5 p-5 mb-6">
-                     <div className="flex justify-between items-end mb-5">
-                        <div>
-                           <div className="text-primary text-xs font-bold uppercase tracking-widest mb-2">Vitesse max</div>
-                           <div className="text-5xl font-bold">42 <span className="text-lg text-primary">km/h</span></div>
-                        </div>
-                        <div className="text-right">
-                           <div className="text-3xl font-bold text-primary">13e</div>
-                           <div className="text-white/60 text-[10px] font-bold uppercase">Plus rapide en enduro</div>
-                        </div>
-                     </div>
-                     <svg viewBox="0 0 300 70" className="w-full h-16 fill-none stroke-primary" strokeWidth="3" aria-hidden="true">
-                        <path d="M0 55 C35 48 45 18 78 30 S125 61 153 35 S198 8 220 28 S265 50 300 12" />
-                     </svg>
-                  </div>
-                  <div className="text-center text-white/50 text-xs font-bold uppercase tracking-widest">22 septembre 2026 · Alpes</div>
-               </div>
+             <div className="w-full max-w-md">
+                <img
+                  src="/images/bike-rank-share-card.png"
+                  alt="Exemple de carte de statistiques Bike Rank avec distance, temps total, vitesse maximale et classement"
+                  className="w-full rounded-[28px] shadow-[0_24px_60px_rgba(255,91,26,0.28)] transition-transform duration-500 hover:-translate-y-2 hover:rotate-1"
+                />
             </div>
          </div>
       </section>

@@ -63,9 +63,6 @@ export function Header() {
             <div className="absolute top-full right-0 mt-4 w-[280px] glass-glow rounded-2xl p-3 flex flex-col shadow-2xl">
               <div className="px-4 py-3 text-xs font-bold text-primary uppercase tracking-widest border-b border-white/10 mb-1">Navigation</div>
               <NavLink href="#accueil">Accueil</NavLink>
-              <NavLink href="#trouver">Trouver un spot</NavLink>
-               <NavLink href="#spots">Spots</NavLink>
-              <NavLink href="#carte">Carte</NavLink>
               <NavLink href="#classement">Classement</NavLink>
               <NavLink href="#faq">FAQ</NavLink>
 
@@ -122,9 +119,6 @@ export function Footer() {
           <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-sm">Navigation</h4>
           <ul className="space-y-3 text-lg font-medium">
             <li><FooterLink href="#accueil">Accueil</FooterLink></li>
-            <li><FooterLink href="#trouver">Trouver un spot</FooterLink></li>
-             <li><FooterLink href="#spots">Spots</FooterLink></li>
-            <li><FooterLink href="#carte">Carte</FooterLink></li>
             <li><FooterLink href="#classement">Classement</FooterLink></li>
             <li><FooterLink href="#faq">Questions fréquentes</FooterLink></li>
           </ul>
