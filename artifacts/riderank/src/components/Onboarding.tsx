@@ -82,6 +82,12 @@ export function Onboarding() {
   };
 
   useEffect(() => {
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previous; };
+  }, []);
+
+  useEffect(() => {
     if (step !== 'loading') return;
     setConfigIndex(0);
     const timers = CONFIG_STEPS.map((_, i) =>
@@ -123,7 +129,7 @@ export function Onboarding() {
   // ---- Splash ----
   if (step === 'splash') {
     return (
-      <div className="modal-backdrop">
+      <div className="onboarding-page">
         <section className="app-modal onboarding-modal" role="dialog" aria-modal="true">
           <button className="modal-close" onClick={() => setAuthOpen(false)}><X size={24} /></button>
           <div className="flex flex-col items-center justify-center text-center py-10">
@@ -147,7 +153,7 @@ export function Onboarding() {
   // ---- Loading ----
   if (step === 'loading') {
     return (
-      <div className="modal-backdrop">
+      <div className="onboarding-page">
         <section className="app-modal onboarding-modal" role="dialog" aria-modal="true">
           <div className="flex flex-col items-center justify-center text-center py-16">
             <div className="relative w-28 h-28 mb-10">
@@ -190,7 +196,7 @@ export function Onboarding() {
   // ---- Credentials ----
   if (step === 'credentials') {
     return (
-      <div className="modal-backdrop">
+      <div className="onboarding-page">
         <section className="app-modal onboarding-modal" role="dialog" aria-modal="true">
           <button className="modal-close" onClick={() => setAuthOpen(false)}><X size={24} /></button>
           <div className="eyebrow mb-2">Dernière étape</div>
@@ -225,7 +231,7 @@ export function Onboarding() {
   // ---- Paywall ----
   if (step === 'paywall') {
     return (
-      <div className="modal-backdrop">
+      <div className="onboarding-page">
         <section className="app-modal onboarding-modal" role="dialog" aria-modal="true">
           <button className="modal-close" onClick={() => finish('Bienvenue dans la meute.')}><X size={24} /></button>
           <div className="eyebrow mb-2">Tu es prêt, @{pseudo || 'rider'}</div>
@@ -287,7 +293,7 @@ export function Onboarding() {
 
   // ---- Content steps (feature / goal / discipline / social / profile / leaderboard) ----
   return (
-    <div className="modal-backdrop">
+    <div className="onboarding-page">
       <section className="app-modal onboarding-modal" role="dialog" aria-modal="true">
         <div className="flex items-center gap-4 mb-8">
           <button onClick={goBack} className="text-zinc-400 hover:text-white shrink-0" aria-label="Retour"><ChevronLeft size={26} /></button>

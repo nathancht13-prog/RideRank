@@ -209,6 +209,10 @@ body::before {
 .input-suffix-btn { display: grid; place-items: center; padding: 0 20px; background: transparent; border: none; border-left: 1px solid rgba(255,255,255,0.1); color: hsl(var(--muted-foreground)); cursor: pointer; transition: color 0.2s ease; }
 .input-suffix-btn:hover { color: hsl(var(--primary)); }
 
+.onboarding-page { position: fixed; inset: 0; z-index: 300; display: flex; justify-content: center; overflow-y: auto; -webkit-overflow-scrolling: touch; background: radial-gradient(circle at 50% 0%, rgba(255, 91, 26, 0.14), transparent 45%), #050505; }
+.app-modal.onboarding-modal { width: min(520px, 100%); max-height: none; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; padding: 72px 24px 40px; border: none; border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; animation: none; overflow: visible; }
+.app-modal.onboarding-modal .modal-close { top: 16px; right: 16px; }
+
 .form-error { margin: 0; color: #ff5b1a; font-weight: 600; }
 .field-help { color: hsl(var(--muted-foreground)); font-size: 14px; font-weight: 600; letter-spacing: 0; text-transform: none; }
 
