@@ -6,6 +6,8 @@ import { TabBar } from './components/TabBar';
 import LandingPage from './pages/LandingPage';
 import HomePage from './pages/HomePage';
 import LeaderboardPage from './pages/LeaderboardPage';
+import RidesPage from './pages/RidesPage';
+import StatsPage from './pages/StatsPage';
 import LegalPage from './pages/LegalPage';
 import RideTrackerPage from './pages/RideTrackerPage';
 
@@ -19,6 +21,8 @@ export default function App() {
           <Route path="/" component={LandingPage} />
           <Route path="/app" component={HomePage} />
           <Route path="/classement" component={LeaderboardPage} />
+          <Route path="/sorties" component={RidesPage} />
+          <Route path="/stats" component={StatsPage} />
           <Route path="/ride" component={RideTrackerPage} />
           <Route path="/legal" component={LegalPage} />
           <Route>

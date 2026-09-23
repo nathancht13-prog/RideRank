@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, MapPin, Navigation, Pause, Play, Share2, Square, Timer } from 'lucide-react';
 import { Link } from 'wouter';
 import { useBikeRank } from '../BikeRankContext';
 import { SpeedDial } from '../components/SpeedDial';
+import { RideMap } from '../components/RideMap';
+import { dateKey } from '../lib/weekStats';
 import { supabase } from '../lib/supabase';
 import type { GpsPoint, RideActivity } from '../types';
 
@@ -27,40 +29,6 @@ function formatDuration(seconds: number) {
   return hours > 0
     ? `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
     : `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-}
-
-function RideMap({ points }: { points: GpsPoint[] }) {
-  const path = useMemo(() => {
-    if (points.length < 2) return '';
-    const lats = points.map((point) => point.lat);
-    const lngs = points.map((point) => point.lng);
-    const minLat = Math.min(...lats);
-    const maxLat = Math.max(...lats);
-    const minLng = Math.min(...lngs);
-    const maxLng = Math.max(...lngs);
-    const latRange = Math.max(maxLat - minLat, 0.0001);
-    const lngRange = Math.max(maxLng - minLng, 0.0001);
-    return points.map((point, index) => {
-      const x = 12 + ((point.lng - minLng) / lngRange) * 276;
-      const y = 108 - ((point.lat - minLat) / latRange) * 96;
-      return `${index === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`;
-    }).join(' ');
-  }, [points]);
-
-  return (
-    <div className="relative h-56 rounded-[28px] overflow-hidden border border-primary/35 bg-[#090909]">
-      <div className="absolute inset-0 opacity-35 bg-[linear-gradient(rgba(255,91,26,.16)_1px,transparent_1px),linear-gradient(90deg,rgba(255,91,26,.16)_1px,transparent_1px)] bg-[size:28px_28px]" />
-      <svg viewBox="0 0 300 120" className="absolute inset-0 w-full h-full" aria-label="Tracé GPS de la sortie">
-        {path && <path d={path} fill="none" stroke="#ff5b1a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-[0_0_8px_rgba(255,91,26,1)]" />}
-        {path && <circle cx="12" cy="108" r="5" fill="#fff" />}
-      </svg>
-      {points.length < 2 && (
-        <div className="absolute inset-0 flex items-center justify-center text-zinc-500 font-bold uppercase tracking-widest text-sm">
-          Le tracé apparaîtra ici
-        </div>
-      )}
-    </div>
-  );
 }
 
 export default function RideTrackerPage() {
@@ -203,7 +171,7 @@ export default function RideTrackerPage() {
     setStatus('saving');
     const payload = {
       user_id: session.user.id,
-      activity_date: startedAtRef.current.toISOString().slice(0, 10),
+      activity_date: dateKey(startedAtRef.current),
       distance_km: Number(distance.toFixed(3)),
       elevation_m: 0,
       duration_seconds: duration,
@@ -309,7 +277,7 @@ export default function RideTrackerPage() {
   }
 
   return (
-    <main className="min-h-screen pt-28 pb-24 bg-black relative overflow-hidden">
+    <main className="min-h-screen pt-28 pb-44 bg-black relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,91,26,.16),transparent_34%)]" />
       <div className="container max-w-4xl relative z-10">
         <Link href="/" className="inline-flex items-center gap-2 text-zinc-400 hover:text-white font-bold uppercase tracking-widest mb-10">
