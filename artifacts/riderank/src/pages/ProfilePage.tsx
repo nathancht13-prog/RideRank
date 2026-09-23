@@ -96,7 +96,7 @@ export default function ProfilePage() {
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
           {menuOpen && (
-            <div className="absolute top-full right-0 mt-3 w-[280px] glass-glow rounded-2xl p-3 flex flex-col shadow-2xl z-20">
+            <div className="absolute top-full right-0 mt-3 w-[280px] glass-glow rounded-2xl p-3 flex flex-col shadow-2xl z-20" style={{ background: 'rgb(8, 8, 8)', backdropFilter: 'none', WebkitBackdropFilter: 'none' }}>
               <button className={menuItem} onClick={() => { setProfileOpen(true); setMenuOpen(false); }}><Pencil size={20} /> Modifier mon profil</button>
               <button className={menuItem} onClick={() => { setActivityOpen(true); setMenuOpen(false); }}><Plus size={20} /> Ajouter une sortie manuelle</button>
               <button className={`${menuItem} text-primary`} onClick={() => { setShareOpen(true); setMenuOpen(false); }}><Trophy size={20} /> Mes stats à partager</button>

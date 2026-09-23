@@ -1,13 +1,23 @@
 import { useEffect } from 'react';
+import { Link } from 'wouter';
+import { ArrowLeft } from 'lucide-react';
+import { useAppMode } from '../lib/appMode';
 
 export default function LegalPage() {
+  const appMode = useAppMode();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <main className="min-h-screen bg-white pt-32 pb-24 text-zinc-600">
+    <main className={`min-h-screen bg-white ${appMode ? 'pt-10 pb-44' : 'pt-32 pb-24'} text-zinc-600`}>
       <div className="container max-w-3xl">
+        {appMode && (
+          <Link href="/profil" className="inline-flex items-center gap-2 text-zinc-500 hover:text-black font-bold uppercase tracking-widest mb-8">
+            <ArrowLeft size={18} /> Retour au profil
+          </Link>
+        )}
         <h1 className="text-5xl md:text-7xl font-display font-bold uppercase text-black mb-12">Mentions<br/><span className="text-primary">Légales</span></h1>
         
         <div className="space-y-16">

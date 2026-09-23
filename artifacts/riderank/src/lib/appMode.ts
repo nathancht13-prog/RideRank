@@ -1,7 +1,7 @@
 import { useLocation } from 'wouter';
 import { useBikeRank } from '../BikeRankContext';
 
-export const APP_PATHS = ['/app', '/sorties', '/stats', '/classement', '/profil', '/ride'];
+export const APP_PATHS = ['/app', '/sorties', '/stats', '/classement', '/profil', '/ride', '/legal'];
 
 export function useAppMode() {
   const { session } = useBikeRank();

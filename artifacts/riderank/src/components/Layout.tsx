@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
-import { ChevronDown, LogOut, Menu, Pencil, Share2, X, Plus, Trophy, Check, Navigation } from 'lucide-react';
+import { ChevronDown, House, LogOut, Menu, Pencil, Share2, X, Plus, Trophy, Check, Navigation } from 'lucide-react';
 import { useBikeRank } from '../BikeRankContext';
 import { useAppMode } from '../lib/appMode';
 
@@ -58,7 +58,7 @@ export function Header() {
           </button>
 
           {menuOpen && (
-            <div className="absolute top-full right-0 mt-4 w-[280px] glass-glow rounded-2xl p-3 flex flex-col shadow-2xl">
+            <div className="absolute top-full right-0 mt-4 w-[280px] glass-glow rounded-2xl p-3 flex flex-col shadow-2xl" style={{ background: 'rgb(8, 8, 8)', backdropFilter: 'none', WebkitBackdropFilter: 'none' }}>
               <div className="px-4 py-3 text-xs font-bold text-primary uppercase tracking-widest border-b border-white/10 mb-1">Navigation</div>
               <NavLink href="#accueil">Accueil</NavLink>
                <NavLink href="#partage">Tes stats prêtes à partager</NavLink>
@@ -73,6 +73,7 @@ export function Header() {
                     <img src={profile?.avatar_url || avatarFallback} className="w-10 h-10 rounded-full border border-primary/50 object-cover" alt="" />
                     <span className="font-bold truncate text-lg">{profile?.pseudo || 'Mon profil'}</span>
                   </div>
+                   <Link href="/app" onClick={() => setMenuOpen(false)} className="menu-link text-left flex items-center gap-3"><House size={20} /> Mon espace</Link>
                    <Link href="/ride" onClick={() => setMenuOpen(false)} className="menu-link text-left flex items-center gap-3 text-primary"><Navigation size={20} /> Démarrer une sortie</Link>
                    <button onClick={() => { setActivityOpen(true); setMenuOpen(false); }} className="menu-link text-left flex items-center gap-3"><Plus size={20} /> Ajouter une sortie manuelle</button>
                   <button onClick={() => { setShareOpen(true); setMenuOpen(false); }} className="menu-link text-left flex items-center gap-3 text-accent"><Trophy size={20} /> Mes stats</button>
