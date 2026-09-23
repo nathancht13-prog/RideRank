@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useLocation } from 'wouter';
 import { ArrowRight, ArrowUp, ChevronDown, MapPin, Mountain, Star, Trophy, Route, Clock, Crown, Navigation2 } from 'lucide-react';
 import { useBikeRank } from '../BikeRankContext';
 import type { Spot } from '../types';
 import { BikeMap } from './BikeMap';
 
 export function Hero() {
-  const { requireAuth, rankedProfiles } = useBikeRank();
+  const { session, requireAuth, rankedProfiles } = useBikeRank();
+  const [, setLocation] = useLocation();
   const monthlyLeader = rankedProfiles[0];
   const monthLabel = new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(new Date());
   
@@ -40,7 +42,7 @@ export function Hero() {
               </div>
            </div>
 
-           <button onClick={() => requireAuth('signup')} className="button-primary w-full max-w-xl text-base sm:text-xl px-5 sm:px-10 py-5 flex items-center gap-3 group" data-testid="cta-hero">
+           <button onClick={() => (session ? setLocation('/app') : requireAuth('signup'))} className="button-primary w-full max-w-xl text-base sm:text-xl px-5 sm:px-10 py-5 flex items-center gap-3 group" data-testid="cta-hero">
               Entrer dans le classement <ArrowRight className="group-hover:translate-x-1 transition-transform w-6 h-6" />
            </button>
            <p className="w-full text-center text-sm sm:text-lg text-zinc-500 mt-4 font-medium uppercase tracking-wider flex items-center justify-center gap-2">
@@ -426,7 +428,8 @@ export function LeaderboardSection() {
 }
 
 export function Progression() {
-   const { requireAuth } = useBikeRank();
+   const { session, requireAuth } = useBikeRank();
+   const [, setLocation] = useLocation();
    return (
        <section className="py-32 bg-white text-black relative overflow-hidden" id="progression">
          <div className="absolute inset-0 z-0">
@@ -471,7 +474,7 @@ export function Progression() {
                </div>
             </div>
 
-            <button onClick={() => requireAuth('signup')} className="button-primary text-xl px-12 py-5" data-testid="cta-progression">
+            <button onClick={() => (session ? setLocation('/app') : requireAuth('signup'))} className="button-primary text-xl px-12 py-5" data-testid="cta-progression">
                À toi de rouler <ArrowRight className="inline ml-3 w-6 h-6"/>
             </button>
          </div>

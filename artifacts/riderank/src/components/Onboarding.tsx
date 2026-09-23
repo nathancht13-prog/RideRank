@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'wouter';
 import {
   X, ChevronLeft, Zap, Trophy, BarChart3, HelpCircle, Camera, Eye, EyeOff,
   Check, Bike, Mountain, Battery, Landmark, Infinity as InfinityIcon,
@@ -66,6 +67,7 @@ const CONTENT_STEPS: Step[] = ['feature', 'goal', 'discipline', 'social', 'profi
 
 export function Onboarding() {
   const { setAuthOpen, setAuthMode, setNotice } = useBikeRank();
+  const [, setLocation] = useLocation();
   const [step, setStep] = useState<Step>('splash');
   const [goal, setGoal] = useState<string | null>(null);
   const [discipline, setDiscipline] = useState<string | null>(null);
@@ -121,6 +123,7 @@ export function Onboarding() {
   const finish = (msg: string) => {
     setAuthOpen(false);
     setNotice(msg);
+    setLocation('/app');
   };
 
   const switchToLogin = () => {

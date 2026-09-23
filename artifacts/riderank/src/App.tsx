@@ -2,7 +2,10 @@ import { Route, Switch } from 'wouter';
 import { BikeRankProvider } from './BikeRankContext';
 import { Header, Footer, Toast } from './components/Layout';
 import { Modals } from './components/Modals';
+import { TabBar } from './components/TabBar';
 import LandingPage from './pages/LandingPage';
+import HomePage from './pages/HomePage';
+import LeaderboardPage from './pages/LeaderboardPage';
 import LegalPage from './pages/LegalPage';
 import RideTrackerPage from './pages/RideTrackerPage';
 
@@ -14,6 +17,8 @@ export default function App() {
         
         <Switch>
           <Route path="/" component={LandingPage} />
+          <Route path="/app" component={HomePage} />
+          <Route path="/classement" component={LeaderboardPage} />
           <Route path="/ride" component={RideTrackerPage} />
           <Route path="/legal" component={LegalPage} />
           <Route>
@@ -28,6 +33,7 @@ export default function App() {
         
         <Footer />
         <Modals />
+        <TabBar />
         <Toast />
       </div>
     </BikeRankProvider>

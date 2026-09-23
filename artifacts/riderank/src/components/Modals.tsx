@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, MapPin, Timer, Gauge, Trophy, Share2, Download } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useBikeRank } from '../BikeRankContext';
+import { useLocation } from 'wouter';
 import { Onboarding } from './Onboarding';
 
 function friendlyAuthError(message: string) {
@@ -15,6 +16,7 @@ function friendlyAuthError(message: string) {
 
 export function AuthModal() {
   const { authOpen, setAuthOpen, authMode, setAuthMode, setNotice } = useBikeRank();
+  const [location, setLocation] = useLocation();
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
@@ -37,6 +39,7 @@ export function AuthModal() {
 
     setAuthOpen(false);
     setNotice('Bienvenue dans la meute.');
+    if (location === '/') setLocation('/app');
   };
 
   return (
