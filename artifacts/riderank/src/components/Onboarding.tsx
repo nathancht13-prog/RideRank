@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useBikeRank } from '../BikeRankContext';
+import { SpeedDial } from './SpeedDial';
 
 function friendlyAuthError(message: string) {
   const value = message.toLowerCase();
@@ -468,31 +469,3 @@ export function Onboarding() {
   );
 }
 
-function SpeedDial({ value }: { value: number }) {
-  const max = 100;
-  const ticks = Array.from({ length: 40 });
-  const litCount = Math.round((value / max) * ticks.length);
-  return (
-    <div className="relative w-56 h-56 grid place-items-center">
-      <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full">
-        {ticks.map((_, i) => {
-          const angle = (i / ticks.length) * 360;
-          const lit = i < litCount;
-          return (
-            <line
-              key={i}
-              x1="100" y1="14" x2="100" y2="26"
-              stroke={lit ? '#ff5b1a' : 'rgba(255,255,255,0.15)'}
-              strokeWidth="3" strokeLinecap="round"
-              transform={`rotate(${angle} 100 100)`}
-            />
-          );
-        })}
-      </svg>
-      <div className="text-center">
-        <div className="text-7xl font-bold leading-none">{value}</div>
-        <div className="text-primary font-bold tracking-widest mt-1">km/h</div>
-      </div>
-    </div>
-  );
-}

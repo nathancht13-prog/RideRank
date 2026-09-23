@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, Gauge, MapPin, Navigation, Pause, Play, Share2, Square, Timer } from 'lucide-react';
+import { ArrowLeft, MapPin, Navigation, Pause, Play, Share2, Square, Timer } from 'lucide-react';
 import { Link } from 'wouter';
 import { useBikeRank } from '../BikeRankContext';
+import { SpeedDial } from '../components/SpeedDial';
 import { supabase } from '../lib/supabase';
 import type { GpsPoint, RideActivity } from '../types';
 
@@ -74,6 +75,7 @@ export default function RideTrackerPage() {
   const [maxSpeed, setMaxSpeed] = useState(0);
   const [discipline, setDiscipline] = useState<RideActivity['discipline']>('Enduro');
   const [gpsMessage, setGpsMessage] = useState('Prêt à chercher le signal GPS.');
+  const [wakeLockActive, setWakeLockActive] = useState(false);
   const startedAtRef = useRef<Date | null>(null);
   const endedAtRef = useRef<Date | null>(null);
   const watchIdRef = useRef<number | null>(null);
@@ -256,6 +258,43 @@ export default function RideTrackerPage() {
     };
   }, [status]);
 
+  useEffect(() => {
+    if (status !== 'tracking' || !('wakeLock' in navigator)) {
+      setWakeLockActive(false);
+      return;
+    }
+    let sentinel: WakeLockSentinel | null = null;
+    let cancelled = false;
+
+    const acquire = async () => {
+      if (sentinel && !sentinel.released) return;
+      try {
+        const lock = await navigator.wakeLock.request('screen');
+        if (cancelled) {
+          lock.release().catch(() => {});
+          return;
+        }
+        sentinel = lock;
+        setWakeLockActive(true);
+        lock.addEventListener('release', () => setWakeLockActive(false));
+      } catch {
+        setWakeLockActive(false);
+      }
+    };
+    const reacquireWhenVisible = () => {
+      if (document.visibilityState === 'visible') acquire();
+    };
+
+    acquire();
+    document.addEventListener('visibilitychange', reacquireWhenVisible);
+    return () => {
+      cancelled = true;
+      document.removeEventListener('visibilitychange', reacquireWhenVisible);
+      sentinel?.release().catch(() => {});
+      setWakeLockActive(false);
+    };
+  }, [status]);
+
   if (!session) {
     return (
       <main className="min-h-screen pt-36 pb-24 bg-black">
@@ -283,7 +322,7 @@ export default function RideTrackerPage() {
 
         <div className="rounded-2xl border border-primary/35 bg-primary/10 text-white p-4 mb-6 flex items-start gap-3">
           <Navigation className="text-primary shrink-0 mt-0.5" size={20} />
-          <p className="font-medium">Garde l’appli ouverte et l’écran allumé pendant ta sortie pour un suivi précis. Le navigateur ne peut pas suivre ta position en arrière-plan.</p>
+          <p className="font-medium">Garde l’appli ouverte pendant ta sortie : l’écran reste allumé automatiquement quand ton navigateur le permet. Le navigateur ne peut pas suivre ta position en arrière-plan.</p>
         </div>
 
         <section className="glass-glow-strong rounded-[32px] p-5 md:p-10">
@@ -295,16 +334,22 @@ export default function RideTrackerPage() {
             <div className="text-zinc-500 text-xs font-bold">{gpsMessage}</div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          <div className="flex flex-col items-center mb-8">
+            <SpeedDial value={currentSpeed} max={60} className="w-64 h-64 md:w-72 md:h-72" />
+            {wakeLockActive && (
+              <div className="text-xs font-bold uppercase tracking-widest text-zinc-500 mt-2">Écran maintenu allumé</div>
+            )}
+          </div>
+
+          <div className="grid grid-cols-3 gap-3 mb-8">
             {[
               { label: 'Distance', value: distance.toFixed(2), unit: 'km', icon: MapPin },
               { label: 'Durée', value: formatDuration(duration), unit: '', icon: Timer },
-              { label: 'Vitesse', value: currentSpeed.toFixed(1), unit: 'km/h', icon: Gauge },
               { label: 'Moyenne', value: averageSpeed.toFixed(1), unit: 'km/h', icon: Navigation },
             ].map(({ label, value, unit, icon: Icon }) => (
-              <div key={label} className="rounded-2xl border border-white/10 bg-black/50 p-4">
-                <div className="flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-widest mb-3"><Icon size={15} /> {label}</div>
-                <div className="text-3xl md:text-4xl font-bold">{value} <span className="text-sm text-zinc-500">{unit}</span></div>
+              <div key={label} className="rounded-2xl border border-white/10 bg-black/50 p-3 md:p-4">
+                <div className="flex items-center gap-1.5 text-primary text-[10px] md:text-xs font-bold uppercase tracking-widest mb-2 md:mb-3"><Icon size={14} /> {label}</div>
+                <div className="text-2xl md:text-4xl font-bold">{value} <span className="text-xs md:text-sm text-zinc-500">{unit}</span></div>
               </div>
             ))}
           </div>
