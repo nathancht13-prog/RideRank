@@ -68,7 +68,7 @@ export default function HomePage() {
   const topSpeed = activities.reduce((best, ride) => Math.max(best, ride.max_speed_kmh), 0);
 
   return (
-    <main className="min-h-screen pt-28 pb-44 bg-black relative overflow-hidden">
+    <main className="min-h-screen pt-14 pb-44 bg-black relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,91,26,.18),transparent_40%)]" />
       <div className="container max-w-2xl relative z-10">
         <div className="text-center mb-8">

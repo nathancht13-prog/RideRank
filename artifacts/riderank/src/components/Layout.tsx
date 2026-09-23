@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { ChevronDown, LogOut, Menu, Pencil, Share2, X, Plus, Trophy, Check, Navigation } from 'lucide-react';
 import { useBikeRank } from '../BikeRankContext';
+import { useAppMode } from '../lib/appMode';
 
 const avatarFallback = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%231a1a1a'/%3E%3Ccircle cx='50' cy='38' r='16' fill='%23ff5b1a'/%3E%3Cpath d='M18 92Q50 56 82 92' fill='%23ff5b1a'/%3E%3C/svg%3E";
 
@@ -36,6 +37,9 @@ export function Header() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const appMode = useAppMode();
+  if (appMode) return null;
 
   return (
     <header className="site-header">
@@ -90,7 +94,9 @@ export function Header() {
 
 export function Footer() {
   const [location] = useLocation();
+  const appMode = useAppMode();
   const isHome = location === '/';
+  if (appMode) return null;
 
   const FooterLink = ({ href, children }: { href: string, children: React.ReactNode }) => {
     if (href.startsWith('#') && !isHome) {
@@ -144,9 +150,10 @@ export function Footer() {
 
 export function Toast() {
   const { notice, setNotice } = useBikeRank();
+  const appMode = useAppMode();
   if (!notice) return null;
   return (
-    <button className="toast-notice animate-in slide-in-from-bottom-5" onClick={() => setNotice('')} data-testid="toast-notice">
+    <button className={`toast-notice animate-in slide-in-from-bottom-5 ${appMode ? 'toast-above-tabbar' : ''}`} onClick={() => setNotice('')} data-testid="toast-notice">
       <div className="w-8 h-8 bg-primary text-black rounded-full flex items-center justify-center font-bold text-lg"><Check size={18} strokeWidth={3} /></div>
       {notice}
     </button>

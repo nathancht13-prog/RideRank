@@ -1,14 +1,12 @@
 import { Link, useLocation } from 'wouter';
 import { BarChart3, House, List, Plus, User } from 'lucide-react';
-import { useBikeRank } from '../BikeRankContext';
-
-const APP_PATHS = ['/app', '/sorties', '/stats', '/classement', '/ride'];
+import { useAppMode } from '../lib/appMode';
 
 export function TabBar() {
-  const { session, setProfileOpen } = useBikeRank();
+  const appMode = useAppMode();
   const [location] = useLocation();
 
-  if (!session || !APP_PATHS.includes(location)) return null;
+  if (!appMode) return null;
 
   const itemClass = (active: boolean) =>
     `flex flex-1 flex-col items-center gap-1 pt-3 pb-2 text-[11px] font-bold uppercase tracking-widest transition-colors ${active ? 'text-primary' : 'text-zinc-500 hover:text-white'}`;
@@ -42,10 +40,10 @@ export function TabBar() {
           <BarChart3 size={22} />
           Stats
         </Link>
-        <button type="button" onClick={() => setProfileOpen(true)} className={itemClass(false)}>
+        <Link href="/profil" className={itemClass(location === '/profil')}>
           <User size={22} />
           Profil
-        </button>
+        </Link>
       </div>
     </nav>
   );

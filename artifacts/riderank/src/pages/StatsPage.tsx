@@ -41,7 +41,7 @@ export default function StatsPage() {
   ];
 
   return (
-    <main className="min-h-screen pt-28 pb-44 bg-black relative overflow-hidden">
+    <main className="min-h-screen pt-14 pb-44 bg-black relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,91,26,.16),transparent_40%)]" />
       <div className="container max-w-2xl relative z-10">
         <div className="eyebrow mb-2">Performances</div>

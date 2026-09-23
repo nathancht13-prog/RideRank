@@ -277,10 +277,10 @@ export default function RideTrackerPage() {
   }
 
   return (
-    <main className="min-h-screen pt-28 pb-44 bg-black relative overflow-hidden">
+    <main className="min-h-screen pt-14 pb-44 bg-black relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,91,26,.16),transparent_34%)]" />
       <div className="container max-w-4xl relative z-10">
-        <Link href="/" className="inline-flex items-center gap-2 text-zinc-400 hover:text-white font-bold uppercase tracking-widest mb-10">
+        <Link href="/app" className="inline-flex items-center gap-2 text-zinc-400 hover:text-white font-bold uppercase tracking-widest mb-10">
           <ArrowLeft size={18} /> Retour
         </Link>
         <div className="text-center mb-10">
