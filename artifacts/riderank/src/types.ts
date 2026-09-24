@@ -2,6 +2,8 @@ export type Spot = {
   id: string; name: string; region: string; practice_type: string;
   description: string; average_rating: number; photo_url: string | null;
   elevation_m: number | null;
+  latitude: number | null;
+  longitude: number | null;
 };
 export type Profile = {
   id: string; pseudo: string; avatar_url: string | null; ville: string | null;

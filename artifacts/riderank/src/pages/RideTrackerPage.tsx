@@ -322,7 +322,7 @@ export default function RideTrackerPage() {
             ))}
           </div>
 
-          <RideMap points={points} />
+          <RideMap points={points} follow={status === 'tracking'} />
 
           {(status === 'summary' || status === 'saving' || status === 'saved') && (
             <div className="mt-6 grid sm:grid-cols-2 gap-4">

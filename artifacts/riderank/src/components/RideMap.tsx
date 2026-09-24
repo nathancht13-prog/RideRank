@@ -1,5 +1,6 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { GpsPoint } from '../types';
+import { googleMapsAvailable, loadGoogleMaps, onMapsAuthFailure, type MapsApi } from '../lib/googleMaps';
 
 export const SPEED_LEVELS = [
   { label: 'Lent', max: 10, color: '#ffffff' },
@@ -25,7 +26,133 @@ export function SpeedLegend({ className = '' }: { className?: string }) {
   );
 }
 
-export function RideMap({ points }: { points: GpsPoint[] }) {
+type RideMapProps = {
+  points: GpsPoint[];
+  follow?: boolean;
+};
+
+function GoogleRideMap({ points, follow = false, onError }: RideMapProps & { onError: () => void }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<any>(null);
+  const linesRef = useRef<any[]>([]);
+  const currentLineRef = useRef<{ line: any; color: string } | null>(null);
+  const startMarkerRef = useRef<any>(null);
+  const headMarkerRef = useRef<any>(null);
+  const drawnCountRef = useRef(0);
+  const [api, setApi] = useState<MapsApi | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const unsubscribe = onMapsAuthFailure(onError);
+
+    loadGoogleMaps()
+      .then((maps) => {
+        if (cancelled || !containerRef.current) return;
+        mapRef.current = new maps.Map(containerRef.current, {
+          center: { lat: 46.6, lng: 2.4 },
+          zoom: 5,
+          mapTypeId: 'terrain',
+          disableDefaultUI: true,
+          zoomControl: true,
+          gestureHandling: 'cooperative',
+        });
+        setApi(maps);
+      })
+      .catch(() => { if (!cancelled) onError(); });
+
+    return () => {
+      cancelled = true;
+      unsubscribe();
+      linesRef.current.forEach((line) => line.setMap(null));
+      linesRef.current = [];
+      currentLineRef.current = null;
+      startMarkerRef.current?.setMap(null);
+      headMarkerRef.current?.setMap(null);
+      startMarkerRef.current = null;
+      headMarkerRef.current = null;
+      drawnCountRef.current = 0;
+      mapRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!api || !map) return;
+
+    if (points.length < drawnCountRef.current) {
+      linesRef.current.forEach((line) => line.setMap(null));
+      linesRef.current = [];
+      currentLineRef.current = null;
+      startMarkerRef.current?.setMap(null);
+      headMarkerRef.current?.setMap(null);
+      startMarkerRef.current = null;
+      headMarkerRef.current = null;
+      drawnCountRef.current = 0;
+    }
+
+    for (let i = drawnCountRef.current; i < points.length; i++) {
+      const point = points[i];
+      const color = speedColor(point.speed_kmh);
+      const current = currentLineRef.current;
+
+      if (i === 0) {
+        startMarkerRef.current = new api.Marker({
+          map,
+          position: { lat: point.lat, lng: point.lng },
+          icon: { path: 0, scale: 6, fillColor: '#ffffff', fillOpacity: 1, strokeColor: '#ff5b1a', strokeWeight: 3 },
+        });
+      }
+
+      if (!current || current.color !== color) {
+        const path = i > 0 ? [{ lat: points[i - 1].lat, lng: points[i - 1].lng }] : [];
+        path.push({ lat: point.lat, lng: point.lng });
+        const line = new api.Polyline({ map, path, strokeColor: color, strokeOpacity: 0.95, strokeWeight: 5 });
+        linesRef.current.push(line);
+        currentLineRef.current = { line, color };
+      } else {
+        current.line.getPath().push(new api.LatLng(point.lat, point.lng));
+      }
+    }
+    drawnCountRef.current = points.length;
+
+    if (points.length === 0) return;
+    const last = points[points.length - 1];
+    const lastPosition = { lat: last.lat, lng: last.lng };
+
+    if (!headMarkerRef.current) {
+      headMarkerRef.current = new api.Marker({
+        map,
+        position: lastPosition,
+        icon: { path: 0, scale: 8, fillColor: '#ff5b1a', fillOpacity: 1, strokeColor: '#ffffff', strokeWeight: 3 },
+      });
+    } else {
+      headMarkerRef.current.setPosition(lastPosition);
+    }
+
+    if (follow) {
+      if (points.length === 1) map.setZoom(17);
+      map.panTo(lastPosition);
+    } else if (points.length > 1) {
+      const bounds = new api.LatLngBounds();
+      points.forEach((point) => bounds.extend({ lat: point.lat, lng: point.lng }));
+      map.fitBounds(bounds, 40);
+    }
+  }, [api, points, follow]);
+
+  return (
+    <div className="relative h-72 md:h-96 rounded-[28px] overflow-hidden border border-primary/35 bg-[#090909]">
+      <div ref={containerRef} className="absolute inset-0" />
+      {points.length === 0 && (
+        <div className="absolute inset-x-0 top-4 flex justify-center pointer-events-none">
+          <span className="rounded-full bg-black/75 px-4 py-2 text-zinc-300 font-bold uppercase tracking-widest text-xs">Le tracé apparaîtra ici</span>
+        </div>
+      )}
+      <SpeedLegend className="absolute bottom-3 left-3 rounded-xl bg-black/75 px-3 py-2" />
+    </div>
+  );
+}
+
+function SvgRideMap({ points }: RideMapProps) {
   const trace = useMemo(() => {
     if (points.length < 2) return null;
     const lats = points.map((point) => point.lat);
@@ -76,4 +203,10 @@ export function RideMap({ points }: { points: GpsPoint[] }) {
       <SpeedLegend className="absolute bottom-3 left-4 right-4" />
     </div>
   );
+}
+
+export function RideMap({ points, follow = false }: RideMapProps) {
+  const [failed, setFailed] = useState(!googleMapsAvailable);
+  if (failed) return <SvgRideMap points={points} />;
+  return <GoogleRideMap points={points} follow={follow} onError={() => setFailed(true)} />;
 }
