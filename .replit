@@ -24,6 +24,7 @@ timeoutMs = 20000
 [userenv.shared]
 VITE_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_mr3xRqrLreoy8NGCaFEk-A_dmd5i4Ks"
 VITE_SUPABASE_URL = "https://zekuputhdicexrumnjrp.supabase.co"
+VITE_GOOGLE_MAPS_API_KEY = "AIzaSyCu_4J82XmLuEeOTFoR71E-qnq0TBVq678"
 
 [nix]
 channel = "stable-25_05"
