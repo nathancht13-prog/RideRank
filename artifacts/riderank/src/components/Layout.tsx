@@ -7,7 +7,7 @@ import { useAppMode } from '../lib/appMode';
 const avatarFallback = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%231a1a1a'/%3E%3Ccircle cx='50' cy='38' r='16' fill='%23ff5b1a'/%3E%3Cpath d='M18 92Q50 56 82 92' fill='%23ff5b1a'/%3E%3C/svg%3E";
 
 export function Header() {
-  const { session, profile, requireAuth, setProfileOpen, setActivityOpen, setShareOpen } = useBikeRank();
+  const { session, profile, requireAuth, setActivityOpen, setShareOpen } = useBikeRank();
   const [menuOpen, setMenuOpen] = useState(false);
   const [location] = useLocation();
   const isHome = location === '/';
@@ -59,16 +59,9 @@ export function Header() {
 
           {menuOpen && (
             <div className="absolute top-full right-0 mt-4 w-[280px] glass-glow rounded-2xl p-3 flex flex-col shadow-2xl" style={{ background: 'rgb(8, 8, 8)', backdropFilter: 'none', WebkitBackdropFilter: 'none' }}>
-              <div className="px-4 py-3 text-xs font-bold text-primary uppercase tracking-widest border-b border-white/10 mb-1">Navigation</div>
-              <NavLink href="#accueil">Accueil</NavLink>
-               <NavLink href="#partage">Tes stats prêtes à partager</NavLink>
-              <NavLink href="#classement">Classement</NavLink>
-               <NavLink href="#progression">Progression</NavLink>
-              <NavLink href="#faq">FAQ</NavLink>
-
-              <div className="px-4 py-3 text-xs font-bold text-primary uppercase tracking-widest border-b border-white/10 mt-2 mb-1">Compte</div>
               {session ? (
                 <>
+                  <div className="px-4 py-3 text-xs font-bold text-primary uppercase tracking-widest border-b border-white/10 mb-1">Compte</div>
                   <div className="px-4 py-2 flex items-center gap-3 text-white mb-2">
                     <img src={profile?.avatar_url || avatarFallback} className="w-10 h-10 rounded-full border border-primary/50 object-cover" alt="" />
                     <span className="font-bold truncate text-lg">{profile?.pseudo || 'Mon profil'}</span>
@@ -77,13 +70,21 @@ export function Header() {
                    <Link href="/ride" onClick={() => setMenuOpen(false)} className="menu-link text-left flex items-center gap-3 text-primary"><Navigation size={20} /> Démarrer une sortie</Link>
                    <button onClick={() => { setActivityOpen(true); setMenuOpen(false); }} className="menu-link text-left flex items-center gap-3"><Plus size={20} /> Ajouter une sortie manuelle</button>
                   <button onClick={() => { setShareOpen(true); setMenuOpen(false); }} className="menu-link text-left flex items-center gap-3 text-accent"><Trophy size={20} /> Mes stats</button>
-                  <button onClick={() => { setProfileOpen(true); setMenuOpen(false); }} className="menu-link text-left flex items-center gap-3"><Pencil size={20} /> Profil</button>
+                  <Link href="/profil" onClick={() => setMenuOpen(false)} className="menu-link text-left flex items-center gap-3"><Pencil size={20} /> Mon profil</Link>
                   <button onClick={handleLogout} className="menu-link text-left flex items-center gap-3 text-zinc-500 hover:text-white"><LogOut size={20} /> Déconnexion</button>
                 </>
               ) : (
-                <div className="p-2">
-                   <button onClick={() => { requireAuth('signup'); setMenuOpen(false); }} className="button-primary py-4 w-full text-base">S'inscrire / Se connecter</button>
-                </div>
+                <>
+                  <div className="px-4 py-3 text-xs font-bold text-primary uppercase tracking-widest border-b border-white/10 mb-1">Navigation</div>
+                  <NavLink href="#accueil">Accueil</NavLink>
+                  <NavLink href="#partage">Tes stats prêtes à partager</NavLink>
+                  <NavLink href="#classement">Classement</NavLink>
+                  <NavLink href="#progression">Progression</NavLink>
+                  <NavLink href="#faq">FAQ</NavLink>
+                  <div className="p-2 mt-2">
+                    <button onClick={() => { requireAuth('signup'); setMenuOpen(false); }} className="button-primary py-4 w-full text-base">S'inscrire / Se connecter</button>
+                  </div>
+                </>
               )}
             </div>
           )}
